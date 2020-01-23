@@ -5,11 +5,22 @@ import javax.swing.*;
 public class Exercise8
 {
     public static boolean askUser(String question) {
-	JOptionPane.showInputDialog("Answer this question: yes or no?");
-	return JOptionPane.showConfirmDialog(null, "Answer this question: yes or no?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+	JOptionPane.showInputDialog(question);
+	return JOptionPane.showConfirmDialog(null, question, "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
-    public static void main(String[] args) {
-	while (askUser())
+    public static void main(String[] args) { ;
+
+	while (!askUser("Quit")) {}
+	while (!askUser("Really?")) {}
+	if ()
+
+//	if (askUser("Quit?") && askUser("Really?")) {
+//	    return;
+//	} else {
+//	}
+
     }
 }
+
+
