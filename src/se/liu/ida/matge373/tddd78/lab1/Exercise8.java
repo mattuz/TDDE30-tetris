@@ -10,15 +10,12 @@ public class Exercise8
     }
 
     public static void main(String[] args) { ;
+    while (true) {
+        if (askUser("Quit?") && askUser("Really?")) {
+            return;
+	}
+    }
 
-	while (!askUser("Quit")) {}
-	while (!askUser("Really?")) {}
-	if ()
-
-//	if (askUser("Quit?") && askUser("Really?")) {
-//	    return;
-//	} else {
-//	}
 
     }
 }
