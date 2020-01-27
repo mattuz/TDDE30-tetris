@@ -25,95 +25,97 @@ public class Month
     }
 
     public static void main(String[] args) {
-	getMonthDays("January");
+
+	System.out.println(getMonthDays("March"));
     }
 
     public static int getMonthNumber(String name) {
 	int monthnumber = 0;
         switch (name) {
 	    case "January":
-		return 1;
+		monthnumber = 1;
 	    	break;
 	    case "February":
-		return 2;
+		monthnumber = 2;
 	    break;
 	    case "March":
-		return 3;
+		monthnumber = 3;
 	    break;
 	    case "April":
-		return 4;
+		monthnumber = 4;
 	    break;
 	    case "May":
-		return 5;
+		monthnumber = 5;
 	    break;
 	    case "June":
-		return 6;
+		monthnumber = 6;
 	    break;
 	    case "July":
-		return 7;
+		monthnumber = 7;
 	    break;
 	    case "August":
-		return 8;
+		monthnumber = 8;
 	    break;
 	    case "September":
-		return 9;
+		monthnumber = 9;
 	    break;
 	    case "October":
-		return 10;
+		monthnumber = 10;
 	    break;
 	    case "November":
-		return 11;
+		monthnumber = 11;
 	    break;
 	    case "December":
-		return 12;
+		monthnumber = 12;
 	    break;
 	    default:
 		return -1;
-	    break;
 	}
+	return monthnumber;
     }
 
     public static int getMonthDays(String name) {
+        int monthdays = 0;
 	switch (name) {
 	    case "January":
-		return 31;
+		monthdays = 31;
 	    break;
 	    case "February":
-		return 27;
+		monthdays = 27;
 	    break;
 	    case "March":
-		return 31;
+		monthdays = 31;
 	    break;
 	    case "April":
-		return 30;
+		monthdays = 30;
 	    break;
 	    case "May":
-		return 31;
+		monthdays = 31;
 	    break;
 	    case "June":
-		return 30;
+		monthdays = 30;
 	    break;
 	    case "July":
-		return 31;
+		monthdays = 31;
 	    break;
 	    case "August":
-		return 31;
+		monthdays = 31;
 	    break;
 	    case "September":
-		return 30;
+		monthdays = 30;
 	    break;
 	    case "October":
-		return 31;
+		monthdays = 31;
 	    break;
 	    case "November":
-		return 30;
+		monthdays = 30;
 	    break;
 	    case "December":
-		return 31;
+		monthdays = 31;
 	    break;
 	    default:
 		return -1;
-	    break;
 	}
+	return monthdays;
     }
 }
