@@ -1,6 +1,5 @@
 package se.liu.ida.matge373.tddd78.lab2;
 
-import javax.xml.namespace.QName;
 import java.time.LocalDate;
 import java.time.Period;
 

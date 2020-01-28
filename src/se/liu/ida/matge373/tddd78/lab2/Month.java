@@ -26,13 +26,17 @@ public class Month
 
     public static void main(String[] args) {
 
-	System.out.println(getMonthDays("March"));
+	System.out.println(getMonthNumber("March"));
+    }
+
+    @Override public String toString() {
+	return  name;
     }
 
     public static int getMonthNumber(String name) {
 	int monthnumber = 0;
         switch (name) {
-	    case "January":
+	    case ("January"):
 		monthnumber = 1;
 	    	break;
 	    case "February":
@@ -77,7 +81,7 @@ public class Month
     public static int getMonthDays(String name) {
         int monthdays = 0;
 	switch (name) {
-	    case "January":
+	    case "January": //Kan man göra if-satser här och kolla ex. case if (name == "January" || "March" || osv..){}:??
 		monthdays = 31;
 	    break;
 	    case "February":
