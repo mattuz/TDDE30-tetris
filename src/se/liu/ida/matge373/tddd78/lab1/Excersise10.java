@@ -4,7 +4,7 @@ public class Excersise10
 {
     public static void main(String[] args) {
 	int tal = 16777217;
-	double decimaltal = tal;
+	float decimaltal = tal;
 	int tillbaka = (int)decimaltal;
 	int big = 2147483647;
 	long bigger = (long)big + 1;
