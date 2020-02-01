@@ -4,7 +4,7 @@ public class Poly
 {
     private Poly[][] polymino;
 
-    public Poly(final Poly[][] polymino) {
-        this.polymino = polymino;
+    public Poly(final Poly[][]) {
+        this.polymino = new Poly[][];
     }
 }
