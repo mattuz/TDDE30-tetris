@@ -2,9 +2,18 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 public class Poly
 {
-    private Poly[][] polymino;
+    private SquareType[][] polymino;
 
-    public Poly(final Poly[][]) {
-        this.polymino = new Poly[][];
+
+    public Poly(final SquareType[][] polymino) {
+        this.polymino = polymino;
+    }
+
+    public int getHeight(){
+        return this.polymino.length;
+    }
+
+    public int getWidth(){
+        return this.polymino[0].length;
     }
 }
