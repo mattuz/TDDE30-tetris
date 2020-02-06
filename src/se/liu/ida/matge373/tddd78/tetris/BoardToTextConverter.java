@@ -4,6 +4,8 @@ public class BoardToTextConverter
 {
     public static String convertToTextBoard(Board board) {
         StringBuilder textboard = new StringBuilder();
+	textboard.append(board.getSquareAt(6,1));
+
 	for (int i = 0; i <  board.getHeight(); i++) {
 	    if (i > 0) {
 	        textboard.append("\n");

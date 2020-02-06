@@ -88,8 +88,8 @@ public class TetrominoMaker
 	SquareType[][] polymino = new SquareType[2][2];
 	polymino[0][0] = O;
 	polymino[0][1] = O;
-	polymino[0][2] = O;
 	polymino[1][0] = O;
+	polymino[1][1] = O;
 	return polymino;
     }
     public SquareType[][] createS() {

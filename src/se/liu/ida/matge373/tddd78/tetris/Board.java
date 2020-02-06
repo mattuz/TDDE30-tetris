@@ -1,5 +1,6 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
+import java.util.EmptyStackException;
 import java.util.Random;
 
 public class Board
@@ -8,9 +9,9 @@ public class Board
     private int width;
     private int height;
     private Random rdn = new Random();
-    Poly falling;
-    int fallingX;
-    int fallingY;
+    Poly falling = new TetrominoMaker().getPoly(1);
+    int fallingX = 5;
+    int fallingY = 1;
 
 
     public Board(final int width, final int height) {
@@ -33,10 +34,29 @@ public class Board
     }
 
     public SquareType getSquareAt(int x, int y) {
-        //if-sats som kollar ifall x,y ligger mellan fallingx,fallingy, fallingx2,fallingy2. (som är bredd/höjd av falling).
-	//if-sats som kollar ifall x,y == fallingx,fallingy --> returnera fallings polymino.
-	//else? som returnerar
+	int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
+	int tetrowidth = falling.getPolyWidth() - 1; //Bredden
+
+	if (getFallingX() <= x && x <= getFallingX() + tetroheight &&
+	    getFallingY() <= y && y <= getFallingY() + tetrowidth &&
+	    falling.getPolymino()[1][1] != SquareType.EMPTY) { //kollar om mitten är EMPTY. Funkar inte för I tetrominon dock (roterad).
+
+	    for (int i = 0; i < falling.getPolyWidth(); i++) {
+		for (int j = 0; j < falling.getPolyHeight(); j++) {
+		    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) {
+			squares[x + i][y + j] = squares[x + i][y + j];
+		    }
+		    else {
+			squares[x + i][y + j] = falling.getPolyminoAt(i, j);
+		    }
+		}
+	    }
+		return squares[x][y];
+	}
+	return squares[x][y];
     }
+
+
 
 
     public int getWidth() {
@@ -55,15 +75,16 @@ public class Board
 	return falling;
     }
 
-    public int getX() {
-	return x;
+    public int getFallingX() {
+	return fallingX;
     }
 
-    public int getY() {
-	return y;
+    public int getFallingY() {
+	return fallingY;
     }
 
     public static void main(String[] args) {
 	Board b1 = new Board(10, 10);
+	System.out.println(b1.getSquares(1,2));
     }
 }

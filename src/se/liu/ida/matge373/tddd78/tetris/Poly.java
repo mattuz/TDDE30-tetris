@@ -9,11 +9,29 @@ public class Poly
         this.polymino = polymino;
     }
 
-    public int getHeight(){
+    public int getPolyHeight(){
         return this.polymino.length;
     }
 
-    public int getWidth(){
+    public int getPolyWidth(){
         return this.polymino[0].length;
+    }
+
+    public SquareType[][] getPolymino() {
+        return polymino;
+    }
+
+    public SquareType getPolyminoAt(int x, int y) {
+        return polymino[x][y];
+    }
+
+    /*public SquareType[][] getPolyType() {
+	    return this.polymino.
+	}*/
+    public static void main(String[] args) {
+        Poly test = new TetrominoMaker().getPoly(2);
+        System.out.println(test.getPolyHeight());
+        System.out.println(test.getPolyWidth());
+        System.out.println(test.polymino.toString());
     }
 }
