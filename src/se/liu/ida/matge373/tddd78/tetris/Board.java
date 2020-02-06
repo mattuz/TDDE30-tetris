@@ -47,7 +47,7 @@ public class Board
 			squares[x + i][y + j] = squares[x + i][y + j];
 		    }
 		    else {
-			squares[x + i][y + j] = falling.getPolyminoAt(i, j);
+			squares[getFallingX() + i][getFallingY() + j] = falling.getPolyminoAt(i, j);
 		    }
 		}
 	    }
