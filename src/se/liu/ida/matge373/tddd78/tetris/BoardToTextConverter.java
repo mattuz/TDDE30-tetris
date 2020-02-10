@@ -4,14 +4,14 @@ public class BoardToTextConverter
 {
     public static String convertToTextBoard(Board board) {
         StringBuilder textboard = new StringBuilder();
-	//textboard.append(board.getSquareAt(6,2));
+	//textboard.append(board.getSquareAt(1,2));
 
 	for (int i = 0; i <  board.getHeight(); i++) {
 	    if (i > 0) {
 	        textboard.append("\n");
 	    }
 	    for (int j = 0; j < board.getWidth(); j++) {
-		switch (board.getSquares(i, j)) {
+		switch (board.getSquareAt(i, j)) {
 		    case EMPTY:
 			textboard.append(" - ");
 		        break;

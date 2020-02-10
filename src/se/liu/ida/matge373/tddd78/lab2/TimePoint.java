@@ -19,8 +19,7 @@ public class TimePoint
     }
 
     @Override public String toString() {
-	return hour + ":" + minute;
-	//String.format("%02d:%02d")
+	return String.format("%02d:%02d", hour, minute);
     }
 
     public static void main(String[] args) {

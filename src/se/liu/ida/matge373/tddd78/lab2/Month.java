@@ -30,48 +30,48 @@ public class Month
     }
 
     @Override public String toString() {
-	return  name;
+	return name;
     }
 
     public static int getMonthNumber(String name) {
 	int monthnumber = 0;
-        switch (name) {
+	switch (name) {
 	    case ("January"):
 		monthnumber = 1;
-	    	break;
+		break;
 	    case "February":
 		monthnumber = 2;
-	    break;
+		break;
 	    case "March":
 		monthnumber = 3;
-	    break;
+		break;
 	    case "April":
 		monthnumber = 4;
-	    break;
+		break;
 	    case "May":
 		monthnumber = 5;
-	    break;
+		break;
 	    case "June":
 		monthnumber = 6;
-	    break;
+		break;
 	    case "July":
 		monthnumber = 7;
-	    break;
+		break;
 	    case "August":
 		monthnumber = 8;
-	    break;
+		break;
 	    case "September":
 		monthnumber = 9;
-	    break;
+		break;
 	    case "October":
 		monthnumber = 10;
-	    break;
+		break;
 	    case "November":
 		monthnumber = 11;
-	    break;
+		break;
 	    case "December":
 		monthnumber = 12;
-	    break;
+		break;
 	    default:
 		return -1;
 	}
@@ -79,44 +79,44 @@ public class Month
     }
 
     public static int getMonthDays(String name) {
-        int monthdays = 0;
+	int monthdays = 0;
 	switch (name) {
 	    case "January": //Kan man göra if-satser här och kolla ex. case if (name == "January" || "March" || osv..){}:??
-		monthdays = 31;
-	    break;
-	    case "February":
-		monthdays = 27;
-	    break;
 	    case "March":
 		monthdays = 31;
-	    break;
+		break;
+
+	    case "February":
+		monthdays = 27;
+		break;
+
 	    case "April":
 		monthdays = 30;
-	    break;
+		break;
 	    case "May":
 		monthdays = 31;
-	    break;
+		break;
 	    case "June":
 		monthdays = 30;
-	    break;
+		break;
 	    case "July":
 		monthdays = 31;
-	    break;
+		break;
 	    case "August":
 		monthdays = 31;
-	    break;
+		break;
 	    case "September":
 		monthdays = 30;
-	    break;
+		break;
 	    case "October":
 		monthdays = 31;
-	    break;
+		break;
 	    case "November":
 		monthdays = 30;
-	    break;
+		break;
 	    case "December":
 		monthdays = 31;
-	    break;
+		break;
 	    default:
 		return -1;
 	}
