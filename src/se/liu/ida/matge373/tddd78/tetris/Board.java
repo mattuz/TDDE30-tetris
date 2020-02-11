@@ -9,8 +9,8 @@ public class Board
     private int width;
     private int height;
     private Random rdn = new Random();
-    Poly falling = new TetrominoMaker().getPoly(0);
-    int fallingX = 1;
+    Poly falling = new TetrominoMaker().getPoly(5);
+    int fallingX = 3;
     int fallingY = 1;
 
 
@@ -36,8 +36,6 @@ public class Board
     public SquareType getSquareAt(int x, int y) {
 	int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
 	int tetrowidth = falling.getPolyWidth() - 1; //Bredden
-	SquareType s1;
-
 
 	if (getFallingX() <= x && x <= getFallingX() + tetroheight &&
 	    getFallingY() <= y && y <= getFallingY() + tetrowidth &&
@@ -45,18 +43,18 @@ public class Board
 	    for (int i = 0; i < falling.getPolyWidth(); i++) {
 		for (int j = 0; j < falling.getPolyHeight(); j++) {
 		    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) {
-			//squares[x + i][y + j] = squares[x + i][y + j];
-			s1 = squares[i][j];
+			return squares[x][y];
 		    }
 		    else {
 			//squares[getFallingX() + i][getFallingY() + j] = falling.getPolyminoAt(i, j);
-			s1 = squares[i][j];
+			return falling.getPolyminoAt(j, i);
 		    }
 		}
 	    }
 		//return squares[][y];
+	    return squares[x][y];
 	}
-	return s1;
+	return squares[x][y];
     }
 
 
