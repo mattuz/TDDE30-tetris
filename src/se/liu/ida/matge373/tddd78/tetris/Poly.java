@@ -32,6 +32,6 @@ public class Poly
         Poly test = new TetrominoMaker().getPoly(2);
         System.out.println(test.getPolyHeight());
         System.out.println(test.getPolyWidth());
-        System.out.println(test.polymino.toString());
+        System.out.println(test.getPolyminoAt(1,2));
     }
 }

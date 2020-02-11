@@ -12,6 +12,10 @@ public class TestShapes
 	Circle c3 = new Circle(7, 5, 5, Color.blue);
 	Rectangle r1 = new Rectangle(5, 4, 3, 5, Color.black);
 	Rectangle r2 = new Rectangle(0, 0, 3, 2, Color.pink);
+	Text t1 = new Text(5, 5, 10, Color.blue,"Hello World");
+	Text t2 = new Text(10, 10, 15, Color.green, "Green World Hello :)");
+	shapes.add(t1);
+	shapes.add(t2);
 	shapes.add(c1);
 	shapes.add(c2);
 	shapes.add(c3);

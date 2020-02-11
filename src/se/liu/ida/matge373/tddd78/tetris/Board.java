@@ -10,8 +10,8 @@ public class Board
     private int height;
     private Random rdn = new Random();
     Poly falling = new TetrominoMaker().getPoly(5);
-    int fallingX = 3;
-    int fallingY = 1;
+    int fallingX = 4;
+    int fallingY = 8;
 
 
     public Board(final int width, final int height) {
@@ -37,25 +37,19 @@ public class Board
 	int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
 	int tetrowidth = falling.getPolyWidth() - 1; //Bredden
 
-	if (getFallingX() <= x && x <= getFallingX() + tetroheight &&
-	    getFallingY() <= y && y <= getFallingY() + tetrowidth &&
-	    falling.getPolymino()[1][1] != SquareType.EMPTY) { //kollar om mitten är EMPTY. Funkar inte för I tetrominon dock (roterad).
-	    for (int i = 0; i < falling.getPolyWidth(); i++) {
-		for (int j = 0; j < falling.getPolyHeight(); j++) {
-		    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) {
-			return squares[x][y];
-		    }
-		    else {
-			//squares[getFallingX() + i][getFallingY() + j] = falling.getPolyminoAt(i, j);
-			return falling.getPolyminoAt(j, i);
-		    }
-		}
+	if (getFallingX() <= x && x <= getFallingX() + tetroheight && getFallingY() <= y &&
+	    y <= getFallingY() + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
+		int i = x - getFallingX(); //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
+		int j = y - getFallingY();
+
+	    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
+		return squares[x][y];
 	    }
-		//return squares[][y];
-	    return squares[x][y];
+	    return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	}
 	return squares[x][y];
     }
+
 
 
 
