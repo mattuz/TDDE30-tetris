@@ -22,7 +22,7 @@ public class TestShapes
 	shapes.add(r1);
 	shapes.add(r2);
 	for (Shape shape : shapes) {
-	shape.draw();
+	//shape.draw();
 	}
 
 

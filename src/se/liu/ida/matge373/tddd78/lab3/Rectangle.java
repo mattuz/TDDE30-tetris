@@ -1,6 +1,6 @@
 package se.liu.ida.matge373.tddd78.lab3;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Rectangle extends AbstractShape
 {
@@ -17,7 +17,9 @@ public class Rectangle extends AbstractShape
 	return "Rectangle{" + "x=" + x + ", y=" + y + ", height=" + height + ", width=" + width + ", color=" + color + '}';
     }
 
-    @Override public void draw() {
-	System.out.println("Ritar: " + this);
+    @Override public void draw(final Graphics g) {
+	//System.out.println("Ritar: " + this);
+	g.setColor(color);
+	g.drawRect(x, y, width, height);
     }
 }

@@ -1,6 +1,6 @@
 package se.liu.ida.matge373.tddd78.lab3;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Text extends AbstractShape
 {
@@ -18,7 +18,9 @@ public class Text extends AbstractShape
     }
 
 
-    @Override public void draw() {
-	System.out.println("Ritar: " + this);
+    @Override public void draw(final Graphics g) {
+	//System.out.println("Ritar: " + this);
+	g.setFont(new Font("serif", Font.PLAIN, size));
+	g.drawString(text, x, y);
     }
 }
