@@ -1,6 +1,5 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
-import java.util.EmptyStackException;
 import java.util.Random;
 
 public class Board
@@ -9,9 +8,9 @@ public class Board
     private int width;
     private int height;
     private Random rdn = new Random();
-    Poly falling = new TetrominoMaker().getPoly(5);
-    int fallingX = 4;
-    int fallingY = 8;
+    private Poly falling = new TetrominoMaker().getPoly(0);
+    private int fallingX = 12;
+    private int fallingY = 8;
 
 
     public Board(final int width, final int height) {
@@ -26,8 +25,8 @@ public class Board
     }
 
     public void rdnBoard(Board board) {
-	for (int i = 0; i < board.getHeight(); i++) {
-	    for (int j = 0; j < board.getWidth(); j++) {
+	for (int i = 0; i < height; i++) {
+	    for (int j = 0; j < width; j++) {
 		squares[i][j] = SquareType.values()[rdn.nextInt(7)];
 	    }
 	}
@@ -37,10 +36,10 @@ public class Board
 	int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
 	int tetrowidth = falling.getPolyWidth() - 1; //Bredden
 
-	if (getFallingX() <= x && x <= getFallingX() + tetroheight && getFallingY() <= y &&
-	    y <= getFallingY() + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
-		int i = x - getFallingX(); //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
-		int j = y - getFallingY();
+	if (fallingX <= x && x <= fallingX + tetroheight && fallingY <= y &&
+	    y <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
+	    int i = x - fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
+	    int j = y - fallingY;
 
 	    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
 		return squares[x][y];
@@ -49,9 +48,6 @@ public class Board
 	}
 	return squares[x][y];
     }
-
-
-
 
 
     public int getWidth() {
@@ -80,6 +76,6 @@ public class Board
 
     public static void main(String[] args) {
 	Board b1 = new Board(10, 10);
-	System.out.println(b1.getSquares(1,2));
+	System.out.println(b1.getSquares(1, 2));
     }
 }

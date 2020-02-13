@@ -5,42 +5,42 @@ import static se.liu.ida.matge373.tddd78.tetris.SquareType.*;
 public class TetrominoMaker
 {
     public int getNumberOfTypes() {
-        return (values().length-1);
+	return (values().length - 1);
     }
 
     public Poly getPoly(int n) {
-        SquareType[][] polymino;
-        switch (n) {
+	SquareType[][] polymino;
+	switch (n) {
 	    case 0:
 		polymino = createI();
-	        break;
+		break;
 	    case 1:
 		polymino = createJ();
-	        break;
+		break;
 	    case 2:
 		polymino = createL();
-	        break;
+		break;
 	    case 3:
 		polymino = createO();
-	        break;
+		break;
 	    case 4:
-	        polymino = createS();
-	        break;
+		polymino = createS();
+		break;
 	    case 5:
 		polymino = createT();
-	        break;
+		break;
 	    case 6:
-	        polymino = createZ();
-	        break;
+		polymino = createZ();
+		break;
 	    default:
-	        throw new IllegalArgumentException("Invalid index: " + n);
+		throw new IllegalArgumentException("Invalid index: " + n);
 	}
 	return new Poly(polymino);
     }
 
     public SquareType[][] createI() {
-        SquareType[][] polymino = new SquareType[4][4];
-        polymino[0][0] = EMPTY;
+	SquareType[][] polymino = new SquareType[4][4];
+	polymino[0][0] = EMPTY;
 	polymino[0][1] = EMPTY;
 	polymino[0][2] = EMPTY;
 	polymino[0][3] = EMPTY;
@@ -58,6 +58,7 @@ public class TetrominoMaker
 	polymino[3][3] = EMPTY;
 	return polymino;
     }
+
     public SquareType[][] createJ() {
 	SquareType[][] polymino = new SquareType[3][3];
 	polymino[0][0] = J;
@@ -71,6 +72,7 @@ public class TetrominoMaker
 	polymino[2][2] = EMPTY;
 	return polymino;
     }
+
     public SquareType[][] createL() {
 	SquareType[][] polymino = new SquareType[3][3];
 	polymino[0][0] = EMPTY;
@@ -84,6 +86,7 @@ public class TetrominoMaker
 	polymino[2][2] = EMPTY;
 	return polymino;
     }
+
     public SquareType[][] createO() {
 	SquareType[][] polymino = new SquareType[2][2];
 	polymino[0][0] = O;
@@ -92,6 +95,7 @@ public class TetrominoMaker
 	polymino[1][1] = O;
 	return polymino;
     }
+
     public SquareType[][] createS() {
 	SquareType[][] polymino = new SquareType[3][3];
 	polymino[0][0] = EMPTY;
@@ -105,6 +109,7 @@ public class TetrominoMaker
 	polymino[2][2] = EMPTY;
 	return polymino;
     }
+
     public SquareType[][] createT() {
 	SquareType[][] polymino = new SquareType[3][3];
 	polymino[0][0] = EMPTY;
@@ -118,6 +123,7 @@ public class TetrominoMaker
 	polymino[2][2] = EMPTY;
 	return polymino;
     }
+
     public SquareType[][] createZ() {
 	SquareType[][] polymino = new SquareType[3][3];
 	polymino[0][0] = Z;

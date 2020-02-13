@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class TetrisViewer
 {
-    JFrame frame = new JFrame();
-    JTextArea textarea;
+    private JFrame frame = new JFrame();
+    private JTextArea textarea;
 
 
     public TetrisViewer(final Board board) {
@@ -18,7 +18,7 @@ public class TetrisViewer
     }
 
     public void show() {
-        frame.setLayout(new BorderLayout());
+	frame.setLayout(new BorderLayout());
 	frame.add(textarea, BorderLayout.CENTER);
 	textarea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 	frame.pack();

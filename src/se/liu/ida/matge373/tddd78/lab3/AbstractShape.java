@@ -1,6 +1,7 @@
 package se.liu.ida.matge373.tddd78.lab3;
 
 import java.awt.*;
+import java.util.Objects;
 
 public abstract class AbstractShape implements Shape
 {
@@ -16,6 +17,17 @@ public abstract class AbstractShape implements Shape
 
     @Override public int getX() {
 	return x;
+    }
+
+    @Override public boolean equals(final Object o) {
+	if (this == o) return true;
+	if (o == null || getClass() != o.getClass()) return false;
+	final AbstractShape that = (AbstractShape) o;
+	return x == that.x && y == that.y && Objects.equals(color, that.color);
+    }
+
+    @Override public int hashCode() {
+	return Objects.hash(x, y, color);
     }
 
     @Override public int getY() {
