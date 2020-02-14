@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DiagramComponent extends JComponent
 {
@@ -23,7 +24,9 @@ public class DiagramComponent extends JComponent
 
     @Override protected void paintComponent(final Graphics g) {
 	super.paintComponent(g);
-
+	for (int i = 0; i < shapes.size() ; i++) {
+	    shapes.get(i).draw(g);
+	}
 
 	// Senare ska vi rita upp alla former här!
     }

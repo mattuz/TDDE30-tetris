@@ -14,7 +14,7 @@ public class DiagramViewer
 
     // Set a fixed seed 0 so you always get the same
     // shapes (for debugging)
-    private final static Random rnd = new Random(0);
+    private final static Random rnd = new Random(6);
 
     private static Color getRandomColor() {
 	return COLORS.get(rnd.nextInt(COLORS.size()));
@@ -32,7 +32,7 @@ public class DiagramViewer
     }
 
     private static Text getRandomText() {
-	return new Text(rnd.nextInt(400), rnd.nextInt(400), rnd.nextInt(400), getRandomColor(), "Hello World!");
+	return new Text(rnd.nextInt(400), rnd.nextInt(400), rnd.nextInt(200), getRandomColor(), "Hello World!");
     }
 
     public static void main(String[] args) {
