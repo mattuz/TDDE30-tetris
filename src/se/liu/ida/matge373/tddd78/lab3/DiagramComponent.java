@@ -9,17 +9,21 @@ public class DiagramComponent extends JComponent
 {
     private List<Shape> shapes;
 
-    public DiagramComponent(final List<Shape> shapes) {
+    public DiagramComponent() {
 	this.shapes = new ArrayList<>();
     }
 
     public void addShape(Shape s) {
       	shapes.add(s);
+    }
 
+    public List<Shape> getShapes() {
+	return shapes;
     }
 
     @Override protected void paintComponent(final Graphics g) {
 	super.paintComponent(g);
+
 
 	// Senare ska vi rita upp alla former här!
     }

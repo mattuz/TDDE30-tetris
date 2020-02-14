@@ -50,7 +50,7 @@ public class DiagramViewer
 		    comp.addShape(getRandomRectangle());
 		    break;
 		case 2:
-		    comp.addShape(getRandomCircle());
+		    comp.addShape(getRandomText());
 		    break;
 	    }
 	}
