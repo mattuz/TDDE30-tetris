@@ -8,9 +8,9 @@ public class TestStackQueue
 {
     public static void main(String[] args) {
 	Stack s1 = new Stack();
-	s1.push(new Person("Matthias", LocalDate.of(1998, 11, 25)));
-	s1.push(new Person("Gustav", LocalDate.of(2003,03,17)));
-	s1.push(new Person("Hilda", LocalDate.of(1999, 11, 11)));
+	s1.push(new Person("Matthias", LocalDate.of(1998, 11, 25))); //Tester där jag lägger in datum
+	s1.push(new Person("Gustav", LocalDate.of(2003,03,17)));     //Därför är det oviktigt om det är
+	s1.push(new Person("Hilda", LocalDate.of(1999, 11, 11)));    //"magic number".
 	s1.push(new Person("Kalle", LocalDate.of(1120, 11, 11)));
 	s1.push(new Person("Jonas", LocalDate.of(1985, 11, 11)));
 	while (!s1.isEmpty()) {

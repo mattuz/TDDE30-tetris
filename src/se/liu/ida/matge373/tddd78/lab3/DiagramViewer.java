@@ -14,7 +14,7 @@ public class DiagramViewer
 
     // Set a fixed seed 0 so you always get the same
     // shapes (for debugging)
-    private final static Random rnd = new Random(6);
+    private final static Random rnd = new Random(6); //Testfall taget från kurswebben. Behöver det verkligen ändras?
 
     private static Color getRandomColor() {
 	return COLORS.get(rnd.nextInt(COLORS.size()));
