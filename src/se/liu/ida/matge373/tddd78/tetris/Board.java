@@ -1,5 +1,6 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
+import javax.swing.*;
 import java.util.Random;
 
 public class Board
@@ -24,7 +25,7 @@ public class Board
 	}
     }
 
-    public void rdnBoard(Board board) {
+    public void rdnBoard(/*Board board*/) {
 	for (int i = 0; i < height; i++) {
 	    for (int j = 0; j < width; j++) {
 		squares[i][j] = SquareType.values()[rdn.nextInt(7)];
@@ -48,6 +49,7 @@ public class Board
 	}
 	return squares[x][y];
     }
+
 
 
     public int getWidth() {
