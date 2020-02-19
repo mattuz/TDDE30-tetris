@@ -13,8 +13,12 @@ public class TetrisViewerOld
 	this.textarea = new JTextArea(board.getHeight(), board.getWidth());
 	String boardstring = BoardToTextConverter.convertToTextBoard(board);
 	textarea.setText(boardstring);
+    }
 
-
+    public void refresh(final Board board) {
+	String boardstring = BoardToTextConverter.convertToTextBoard(board);
+	textarea.setText(boardstring);
+	show();
     }
 
     public void show() {
