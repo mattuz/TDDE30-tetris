@@ -5,8 +5,6 @@ public class BoardToTextConverter
     public static String convertToTextBoard(Board board) {
 	StringBuilder textboard = new StringBuilder();
 	for (int i = 0; i < board.getHeight(); i++) {
-
-
 	    for (int j = 0; j < board.getWidth(); j++) {
 		switch (board.getSquareAt(i, j)) {
 		    case EMPTY:

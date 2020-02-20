@@ -23,12 +23,12 @@ public class TetrisComponent extends JComponent
 
     @Override public Dimension getPreferredSize() { //Används inte denna så är det egentligen ingen mening att den extendar JComponent.
 	super.getPreferredSize();
-	return new Dimension(800,800); //Ska den bara vara såhär kanske?
+	return new Dimension(1000,1000); //Ska den bara vara såhär kanske?
 
     }
 
     public void setColors() {
-	tetromino.put(EMPTY, BLUE);
+	tetromino.put(EMPTY, WHITE);
 	tetromino.put(I, BLUE);
 	tetromino.put(L, GREEN);
 	tetromino.put(J, RED);
@@ -45,14 +45,14 @@ public class TetrisComponent extends JComponent
 
 	for (int i = 0; i < board.getHeight(); i++) {
 	    for (int j = 0; j < board.getWidth(); j++) {
-	        g2d.drawRect(i,j,4,4);
+	       g2d.drawRect(i,j,1,1);
 	    }
 	}
 
 
 
-	g2d.setColor(Color.blue);
-	g2d.drawRect(399,399,40,40);
+	//g2d.setColor(Color.blue);
+	//g2d.drawRect(399,399,40,40);
 
 
 

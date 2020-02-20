@@ -10,6 +10,7 @@ public class TetrisViewer
 
 
     public TetrisViewer(final Board board) {
+
 	this.textarea = new TetrisComponent(board); //Här tar den in boarden som i sin tur kommer hanteras av paintcomponent och dylikt.
 							// Jag vill loopa igenom boarden så att jag får ut alla squares precis som i getSquareAt
 
@@ -17,6 +18,20 @@ public class TetrisViewer
 	//textarea.setText(boardstring);
     }
 
+    public void boardLoop(Board board) {
+	for (int i = 0; i < board.getHeight(); i++) {
+	    for (int j = 0; j < board.getWidth(); j++) {
+		board.getSquareAt(i,j);
+
+	    }
+	}
+    }
+
+    public void refresh(final Board board) {
+	String boardstring = BoardToTextConverter.convertToTextBoard(board);
+	//textarea.setText(boardstring);
+	show();
+    }
 
     public void show() {
 	frame.setLayout(new BorderLayout());

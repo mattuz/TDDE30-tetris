@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 public class BoardTestNew
 {
     public static void main(String[] args) {
-	Board b2 = new Board(400, 400);
+	Board b2 = new Board(500, 500);
 
 	final Action doOneStep = new AbstractAction()
 	{
@@ -15,7 +15,7 @@ public class BoardTestNew
 		b2.rdnBoard();
 		System.out.println("test");
 		//v1.refresh(b2);
-		TetrisViewer v1 = new TetrisViewer(b2);
+		//TetrisViewer v1 = new TetrisViewer(b2);
 		v1.show();
 		//TetrisViewerOld v2 = new TetrisViewerOld(b2);
 		//v2.show();
