@@ -62,10 +62,6 @@ public class TetrisViewer
 
 
 
-    public void refresh(final Board board) { //Ska tas bort.
-	show();
-    }
-
     public TetrisComponent getBoardgraphics() {
 	System.out.println("hello");
 	return boardgraphics;

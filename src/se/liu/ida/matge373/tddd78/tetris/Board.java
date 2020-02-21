@@ -81,7 +81,7 @@ public class Board
     public void moveLeft() {
         fallingX -= 1;
         notifyListeners();
-	System.out.println(fallingY);
+	System.out.println(fallingX);
     }
 
 
