@@ -1,7 +1,5 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
-import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,7 +10,7 @@ public class Board
     private int width;
     private int height;
     private Random rdn = new Random();
-    private Poly falling; //Behöver finnas för att board ska veta att det kan finnas en fallande Poly.
+    private Poly falling; //Idea tycker att denna ska sättas till null. Är det verkligen nödvändigt?
     private int fallingX;
     private int fallingY;
     private List<BoardListener> listenerlist = new ArrayList<>();

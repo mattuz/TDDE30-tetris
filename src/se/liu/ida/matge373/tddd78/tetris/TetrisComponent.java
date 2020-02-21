@@ -2,7 +2,6 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.EnumMap;
 
 import static java.awt.Color.*;

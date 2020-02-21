@@ -1,7 +1,6 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Random;
 
@@ -17,11 +16,9 @@ public class BoardTest
 
 	final Action doOneStep = new AbstractAction()
 	{
-	    TetrisViewerOld v1 = new TetrisViewerOld(b2);
 	    public void actionPerformed(final ActionEvent actionEvent) {
 		b2.rdnBoard();
 		System.out.println("test");
-		v1.refresh(b2);
 		//TetrisViewer v1 = new TetrisViewer(b2);
 		//v1.show();
 	    }

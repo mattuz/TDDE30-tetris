@@ -1,9 +1,5 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.time.DateTimeException;
-
 public class BoardTestNew
 {
     public static void main(String[] args) {
