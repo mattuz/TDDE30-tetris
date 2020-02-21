@@ -1,6 +1,9 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Board
@@ -9,10 +12,10 @@ public class Board
     private int width;
     private int height;
     private Random rdn = new Random();
-    private Poly falling = new TetrominoMaker().getPoly(0);
-    private int fallingX = 12;
-    private int fallingY = 8;
-
+    private Poly falling; //Behöver finnas för att board ska veta att det kan finnas en fallande Poly.
+    private int fallingX;
+    private int fallingY;
+    private List<BoardListener> listenerlist = new ArrayList<>();
 
     public Board(final int width, final int height) {
 	this.width = width;
@@ -21,6 +24,7 @@ public class Board
 	for (int i = 0; i < width; i++) {
 	    for (int j = 0; j < height; j++) {
 		squares[j][i] = SquareType.EMPTY;
+		notifyListeners();
 	    }
 	}
     }
@@ -30,13 +34,16 @@ public class Board
 	for (int i = 0; i < height; i++) {
 	    for (int j = 0; j < width; j++) {
 		squares[i][j] = SquareType.values()[rdn.nextInt(7)];
+		notifyListeners();
 	    }
 	}
     }
 
     public SquareType getSquareAt(int x, int y) {
-	int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
-	int tetrowidth = falling.getPolyWidth() - 1; //Bredden
+        if (falling != null) {
+	    int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
+	    int tetrowidth = falling.getPolyWidth() - 1; //Bredden
+
 
 	if (fallingX <= x && x <= fallingX + tetroheight && fallingY <= y &&
 	    y <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
@@ -44,11 +51,53 @@ public class Board
 	    int j = y - fallingY;
 
 	    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
-		return squares[x][y];
+	        return squares[x][y];
 	    }
 	    return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	}
+        }
 	return squares[x][y];
+    }
+
+    public void addBoardListener (BoardListener bl) {
+        listenerlist.add(bl);
+        //listenerlist.add(bl);
+    }
+
+    private void notifyListeners() {
+	System.out.println(listenerlist);
+        if (listenerlist != null){
+	    System.out.println("HEJ");
+	for (int i = 0; i < listenerlist.size(); i++) {
+	    listenerlist.get(i).boardChanged();
+	    System.out.println("Notifying");
+	}
+	}
+    }
+
+    public void moveRight() {
+        fallingX += 1;
+	System.out.println(fallingX);
+        notifyListeners();
+    }
+
+    public void moveLeft() {
+        fallingX -= 1;
+        notifyListeners();
+    }
+
+
+    public void tick() {
+        if (falling != null && fallingY < height) {
+            fallingY += 1;
+            notifyListeners();
+	}
+	if (falling == null || fallingY > height + 2) {
+	    falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
+	    fallingY = 0;
+	    fallingX = width / 2;
+	    notifyListeners();
+	}
     }
 
 
@@ -77,8 +126,5 @@ public class Board
 	return fallingY;
     }
 
-    public static void main(String[] args) {
-	Board b1 = new Board(10, 10);
-	System.out.println(b1.getSquares(1, 2));
-    }
+
 }
