@@ -61,29 +61,27 @@ public class Board
 
     public void addBoardListener (BoardListener bl) {
         listenerlist.add(bl);
-        //listenerlist.add(bl);
+	System.out.println("Nu finns det en listener");
     }
 
     private void notifyListeners() {
-	System.out.println(listenerlist);
-        if (listenerlist != null){
-	    System.out.println("HEJ");
-	for (int i = 0; i < listenerlist.size(); i++) {
-	    listenerlist.get(i).boardChanged();
-	    System.out.println("Notifying");
-	}
+
+	for (BoardListener listeners : listenerlist){
+	    System.out.println("Nu ska den ha uppdaterats");
+	    listeners.boardChanged();
 	}
     }
 
     public void moveRight() {
         fallingX += 1;
-	System.out.println(fallingX);
         notifyListeners();
+	System.out.println(fallingX);
     }
 
     public void moveLeft() {
         fallingX -= 1;
         notifyListeners();
+	System.out.println(fallingY);
     }
 
 

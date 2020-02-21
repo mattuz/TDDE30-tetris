@@ -13,16 +13,8 @@ public class TetrisViewer
 
 
     public TetrisViewer(final Board board) {
-
 	this.board = board;
 	this.boardgraphics = new TetrisComponent(board); //Här tar den in boarden som i sin tur kommer hanteras av paintcomponent och dylikt.
-	//keyBindings();
-	//show();
-
-	//boardgraphics.getPreferredSize();						// Jag vill loopa igenom boarden så att jag får ut alla squares precis som i getSquareAt
-
-	//String boardstring = BoardToTextConverter.convertToTextBoard(board);
-	//textarea.setText(boardstring);
     }
 
 
@@ -60,10 +52,7 @@ public class TetrisViewer
 	{
 
 	    public void actionPerformed(final ActionEvent actionEvent) {
-		//repaint();
 		board.tick();
-		boardgraphics.repaint();
-		//show();
 	    }
 	};
 	final Timer clockTimer = new Timer(1000, doOneStep);
@@ -73,7 +62,7 @@ public class TetrisViewer
 
 
 
-    public void refresh(final Board board) {
+    public void refresh(final Board board) { //Ska tas bort.
 	show();
     }
 
