@@ -18,11 +18,32 @@ public class Board
     public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
-	this.squares = new SquareType[height][width];
-	for (int i = 0; i < width; i++) {
-	    for (int j = 0; j < height; j++) {
+	this.squares = new SquareType[height + 4][width + 4]; //Skriva en "Frameconstant"?
+	for (int i = 2; i < width + 2; i++) {
+	    for (int j = 2; j < height + 2; j++) {
 		squares[j][i] = SquareType.EMPTY;
 		notifyListeners();
+	    }
+
+	    }
+	for (int i = 0; i < 2; i++) {
+	    for (int j = 0; j < height + 2; j++) {
+		squares[i][j] = SquareType.OUTSIDE;
+	    }
+	}
+	for (int i = 0; i < width + 4; i++) {
+	    for (int j = 0; j < 2; j++) {
+		squares[i][j] = SquareType.OUTSIDE;
+	    }
+	}
+	for (int i = width + 2; i < width + 4; i++) {
+	    for (int j = 0; j < height + 4; j++) {
+	        squares[i][j] = SquareType.OUTSIDE;
+	    }
+	}
+	for (int i = 0; i < width + 4; i++) {
+	    for (int j = height + 2; j < height + 4; j++) {
+		squares[i][j] = SquareType.OUTSIDE;
 	    }
 	}
     }
@@ -43,18 +64,18 @@ public class Board
 	    int tetrowidth = falling.getPolyWidth() - 1; //Bredden
 
 
-	if (fallingX <= x && x <= fallingX + tetroheight && fallingY <= y &&
-	    y <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
-	    int i = x - fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
-	    int j = y - fallingY;
+	if (fallingX <= x+2 && x+2 <= fallingX + tetroheight && fallingY <= y+2 && //+2 överallt!!!!
+	    y+2 <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
+	    int i = x+2 - fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
+	    int j = y+2 - fallingY;
 
 	    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
-	        return squares[x][y];
+	        return squares[x+2][y+2];
 	    }
 	    return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	}
         }
-	return squares[x][y];
+	return squares[x+2][y+2];
     }
 
     public void addBoardListener (BoardListener bl) {
@@ -90,10 +111,20 @@ public class Board
 	}
 	if (falling == null || fallingY > height + 2) {
 	    falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
-	    fallingY = 0;
-	    fallingX = width / 2;
+	    fallingY = 2;
+	    fallingX = (width+2) / 2; //ändrat dessa
 	    notifyListeners();
 	}
+    }
+
+    public boolean hasCollision() {
+	for (int i = 0; i < width; i++) {
+	    for (int j = 0; j < height; j++) {
+		return true;
+	    }
+
+	}
+	return true;
     }
 
 
@@ -107,7 +138,7 @@ public class Board
     }
 
     public SquareType getSquares(int x, int y) {
-	return squares[x][y];
+	return squares[x+2][y+2]; //+2 här
     }
 
     public Poly getFalling() {

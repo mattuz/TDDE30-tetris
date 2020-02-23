@@ -26,7 +26,7 @@ public class TetrisComponent extends JComponent implements BoardListener
 
     @Override public Dimension getPreferredSize() { //Används inte denna så är det egentligen ingen mening att den extendar JComponent.
 	super.getPreferredSize();
-	return new Dimension(board.getWidth() * squareconstant, board.getHeight() * squareconstant); //Ska den bara vara såhär kanske?
+	return new Dimension((board.getWidth()) * squareconstant, (board.getHeight()) * squareconstant); //Ska den bara vara såhär kanske?
 
     }
 
@@ -45,6 +45,7 @@ public class TetrisComponent extends JComponent implements BoardListener
 	tetromino.put(T, GRAY);
 	tetromino.put(S, BLUE);
 	tetromino.put(Z, PINK);
+	tetromino.put(OUTSIDE, ORANGE);
 
 	for (int i = 0; i < board.getHeight(); i++) {
 	    for (int j = 0; j < board.getWidth(); j++) {
