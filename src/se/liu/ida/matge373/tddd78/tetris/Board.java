@@ -1,6 +1,7 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Random;
 
@@ -92,22 +93,49 @@ public class Board
     }
 
     public void moveRight() {
-        fallingX += 1;
-        notifyListeners();
-	System.out.println(fallingX);
+	if (hasCollision()) {
+	    fallingX -= 1;
+	    notifyListeners();
+	} else {
+	    fallingX += 1;
+	    notifyListeners();
+	    System.out.println(fallingX);
+	    System.out.println(getSquares(fallingX, fallingY));
+	}
     }
 
     public void moveLeft() {
-        fallingX -= 1;
-        notifyListeners();
-	System.out.println(fallingX);
+	if (hasCollision()) {
+	    fallingX += 1;
+	    notifyListeners();
+	} else {
+	    fallingX -= 1;
+	    notifyListeners();
+	    System.out.println(fallingX);
+	    System.out.println(getSquares(fallingX, fallingY));
+	}
     }
 
 
     public void tick() {
-        if (falling != null && fallingY < height) {
+        if (falling != null && fallingY < height + 2) {
+           if (hasCollision()) {
+                fallingY -= 1;
+                notifyListeners();
+	       for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
+		   for (int j = 0; j < falling.getPolyHeight(); j++) {
+		       if (falling.getPolyminoAt(i,j) != SquareType.EMPTY) {
+			   squares[fallingX + i][fallingY + j] = falling.getPolyminoAt(i, j);
+			   notifyListeners();
+		       }
+		   }
+
+	       }
+	       falling = null;
+                //falling = null;
+	    } else {
             fallingY += 1;
-            notifyListeners();
+            notifyListeners();}
 	}
 	if (falling == null || fallingY > height + 2) {
 	    falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
@@ -118,13 +146,20 @@ public class Board
     }
 
     public boolean hasCollision() {
-	for (int i = 0; i < width; i++) {
-	    for (int j = 0; j < height; j++) {
-		return true;
-	    }
+	if (falling != null) {
+	    for (int i = 0; i < falling.getPolyWidth(); i++) {
+		for (int j = 0; j < falling.getPolyHeight(); j++) {
+		    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
+			if (squares[fallingX + i][fallingY + j] != SquareType.EMPTY) {
+			    System.out.println("Stoppa");
+			    return true;
+			}
+		    }
 
+		}
+	    }
 	}
-	return true;
+	return false;
     }
 
 

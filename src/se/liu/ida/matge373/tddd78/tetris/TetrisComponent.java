@@ -21,12 +21,13 @@ public class TetrisComponent extends JComponent implements BoardListener
 
     @Override public void boardChanged() {
 	repaint();
-	System.out.println("Hello there..");
+	//System.out.println("Hello there..");
     }
 
     @Override public Dimension getPreferredSize() { //Används inte denna så är det egentligen ingen mening att den extendar JComponent.
 	super.getPreferredSize();
-	return new Dimension((board.getWidth()) * squareconstant, (board.getHeight()) * squareconstant); //Ska den bara vara såhär kanske?
+	return new Dimension((board.getWidth()) * squareconstant,
+			     (board.getHeight()) * squareconstant); //Ska den bara vara såhär kanske?
 
     }
 
