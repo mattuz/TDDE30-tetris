@@ -119,7 +119,7 @@ public class Board
 
     public void tick() {
         if (falling != null && fallingY < height + 2) {
-           if (hasCollision()) {
+           /*if (hasCollision()) {
                 fallingY -= 1;
                 notifyListeners();
 	       for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
@@ -132,11 +132,11 @@ public class Board
 
 	       }
 	       falling = null;
-                //falling = null;
-	    } else {
+	    } else {*/
             fallingY += 1;
+	    System.out.println(hasCollision());
             notifyListeners();}
-	}
+	//}
 	if (falling == null || fallingY > height + 2) {
 	    falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
 	    fallingY = 2;
@@ -145,12 +145,17 @@ public class Board
 	}
     }
 
+    /*public boolean collisionHelperRight() {
+	if ()
+    }*/
+
     public boolean hasCollision() {
 	if (falling != null) {
 	    for (int i = 0; i < falling.getPolyWidth(); i++) {
 		for (int j = 0; j < falling.getPolyHeight(); j++) {
 		    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
-			if (squares[fallingX + i][fallingY + j] != SquareType.EMPTY) {
+			if (squares[fallingX + i + 1][fallingY + j] != SquareType.EMPTY ||
+			    squares[fallingX + i - 1][fallingY + j] != SquareType.EMPTY) {
 			    System.out.println("Stoppa");
 			    return true;
 			}
