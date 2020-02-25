@@ -15,6 +15,7 @@ public class Board
     private int fallingX;
     private int fallingY;
     private List<BoardListener> listenerlist = new ArrayList<>();
+    private boolean gameover = false;
 
     public Board(final int width, final int height) {
 	this.width = width;
@@ -25,8 +26,7 @@ public class Board
 		squares[j][i] = SquareType.EMPTY;
 		notifyListeners();
 	    }
-
-	    }
+	}
 	for (int i = 0; i < 2; i++) {
 	    for (int j = 0; j < height + 2; j++) {
 		squares[i][j] = SquareType.OUTSIDE;
@@ -39,7 +39,7 @@ public class Board
 	}
 	for (int i = width + 2; i < width + 4; i++) {
 	    for (int j = 0; j < height + 4; j++) {
-	        squares[i][j] = SquareType.OUTSIDE;
+		squares[i][j] = SquareType.OUTSIDE;
 	    }
 	}
 	for (int i = 0; i < width + 4; i++) {
@@ -60,33 +60,34 @@ public class Board
     }
 
     public SquareType getSquareAt(int x, int y) {
-        if (falling != null) {
+	if (falling != null) {
 	    int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
 	    int tetrowidth = falling.getPolyWidth() - 1; //Bredden
 
 
-	if (fallingX <= x+2 && x+2 <= fallingX + tetroheight && fallingY <= y+2 && //+2 överallt!!!!
-	    y+2 <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
-	    int i = x+2 - fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
-	    int j = y+2 - fallingY;
+	    if (fallingX <= x + 2 && x + 2 <= fallingX + tetroheight && fallingY <= y + 2 && //+2 överallt!!!!
+		y + 2 <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
+		int i = x + 2 -
+			fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
+		int j = y + 2 - fallingY;
 
-	    if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
-	        return squares[x+2][y+2];
+		if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
+		    return squares[x + 2][y + 2];
+		}
+		return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	    }
-	    return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	}
-        }
-	return squares[x+2][y+2];
+	return squares[x + 2][y + 2];
     }
 
-    public void addBoardListener (BoardListener bl) {
-        listenerlist.add(bl);
+    public void addBoardListener(BoardListener bl) {
+	listenerlist.add(bl);
 	System.out.println("Nu finns det en listener");
     }
 
     private void notifyListeners() {
 
-	for (BoardListener listeners : listenerlist){
+	for (BoardListener listeners : listenerlist) {
 	    System.out.println("Nu ska den ha uppdaterats");
 	    listeners.boardChanged();
 	}
@@ -103,10 +104,10 @@ public class Board
 	    System.out.println(getSquares(fallingX, fallingY));
 	}*/
 	fallingX += 2;
-	fallingX -=1;
+	fallingX -= 1;
 	notifyListeners();
 	if (hasCollision()) {
-	    fallingX -=1;
+	    fallingX -= 1;
 	    notifyListeners();
 	}
     }
@@ -122,55 +123,129 @@ public class Board
 	    System.out.println(getSquares(fallingX, fallingY));
 	}*/
 	fallingX -= 2;
-	fallingX +=1;
+	fallingX += 1;
 	notifyListeners();
 	if (hasCollision()) {
-	    fallingX +=1;
+	    fallingX += 1;
 	    notifyListeners();
 	}
     }
 
+    public void rotate(boolean right) {
+	Poly oldfalling = falling;
+        if (right) {
+	    falling = rotateRight();
+	    notifyListeners();
+	    if (hasCollision()) {
+		System.out.println("Det trodde du va");
+	        falling = oldfalling;
+	        notifyListeners();
+	    }
+	}
+        if (!right) {
+	    for (int i = 0; i < 3; i++) { //Rotera 3 ggr för att få en vänsterrotation.
+		falling = rotateRight();
+	    }
+	    notifyListeners();
+	    if (hasCollision()) {
+		System.out.println("Det trodde du va");
+	        falling = oldfalling;
+	        notifyListeners();
+	    }
+	}
+    }
+
+    public Poly rotateRight() {
+        int size = falling.getPolyHeight(); //samma height som width
+
+	Poly newPoly = new Poly(new SquareType[size][size]);
+
+	for (int r = 0; r < size; r++) {
+	    for (int c = 0; c < size; c++){
+		newPoly.getPolymino()[c][size-1-r] = falling.getPolymino()[r][c];
+	    }
+	}
+	return newPoly;
+    }
 
     public void tick() {
-        if (falling != null && fallingY < height + 2) {
-            fallingY += 2;
-            fallingY -= 1;
-            notifyListeners();
-           if (hasCollision()) {
-                fallingY -= 1;
-                notifyListeners();
-	       for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
-		   for (int j = 0; j < falling.getPolyHeight(); j++) {
-		       if (falling.getPolyminoAt(i,j) != SquareType.EMPTY) {
-			   squares[fallingX + i][fallingY + j] = falling.getPolyminoAt(i, j);
-			   notifyListeners();
-		       }
-		   }
+	if (!gameover) {
+	    if (falling != null && fallingY < height + 2) {
+		fallingY += 2;
+		fallingY -= 1;
+		notifyListeners();
+		if (hasCollision()) {
+		    fallingY -= 1;
+		    notifyListeners();
+		    for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
+			for (int j = 0; j < falling.getPolyHeight(); j++) {
+			    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
+				squares[fallingX + i][fallingY + j] = falling.getPolyminoAt(i, j);
+				notifyListeners();
+			    }
+			}
 
-	       }
-	       falling = null;
-	    }/* else {
+		    }
+		    falling = null;
+		}/* else {
             fallingY += 2;
             fallingY -= 1;
 	    System.out.println(hasCollision());
             notifyListeners();}*/
+	    }
+	    if (falling == null || fallingY > height + 2) {
+		int boardmiddle = (width + 2) / 2;
+		//falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
+		falling = new TetrominoMaker().getPoly(0);
+		fallingY = 2;
+		fallingX = boardmiddle; //ändrat dessa
+		if (hasCollision()) {
+		    falling = null;
+		    notifyListeners();
+		    gameover = true;
+		}
+		notifyListeners();
+	    }
 	}
-	if (falling == null || fallingY > height + 2) {
-	    int boardmiddle = (width +2)/2;
-	    falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
-	    fallingY = 2;
-	    fallingX = boardmiddle; //ändrat dessa
-	    notifyListeners();
-	}
+	removeLines();
     }
 
+    public boolean checkLines(int y) {
+        SquareType memorysquare = null;
+        int memorycounter = 0;
+
+	for (int i = 0; i < width; i++) {
+	    if (memorysquare == null) {
+	        memorysquare = squares[i][y];
+	    }
+	    if (memorysquare == squares[i][y] && squares[i][y] != SquareType.EMPTY) {
+	        memorysquare = squares[i][y];
+	        memorycounter += 1;
+	    }
+	}
+	//System.out.println(memorycounter);
+	return memorycounter == width-1;
+    }
+
+    public void removeLines() {
+	for (int i = 0; i < height; i++) {
+	    if (checkLines(height-1)) {
+		for (int j = 0; j < width; j++) {
+		    squares[i][j] = SquareType.EMPTY;
+		    for (int k = 0; k < i; k++) {
+			squares[j][k] = squares[j][k+1];
+		    }
+		}
+	    }
+	}
+    }
 
     public boolean hasCollision() {
 	if (falling != null) {
 	    for (int i = 0; i < falling.getPolyWidth(); i++) {
 		for (int j = 0; j < falling.getPolyHeight(); j++) {
 		    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
-			if (squares[fallingX + i ][fallingY + j] != SquareType.EMPTY /*||
+			if (squares[fallingX + i][fallingY + j] != SquareType.EMPTY /*||
 			    squares[fallingX + i][fallingY + j + 1] != SquareType.EMPTY*/) {
 			    System.out.println("Stoppa");
 			    return true;
@@ -183,7 +258,6 @@ public class Board
     }
 
 
-
     public int getWidth() {
 	return width;
     }
@@ -193,7 +267,7 @@ public class Board
     }
 
     public SquareType getSquares(int x, int y) {
-	return squares[x+2][y+2]; //+2 här
+	return squares[x + 2][y + 2]; //+2 här
     }
 
     public Poly getFalling() {

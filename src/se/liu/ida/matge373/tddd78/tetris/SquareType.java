@@ -8,7 +8,7 @@ public enum SquareType
 
     public static void main(String[] args) {
 	Random rdn = new Random();
-	for (int i = 0; i < 25; i++) {
+	for (int i = 0; i < 25; i++) { //används ej, kan tas bort. 25 är från gamla tester i lab 2.
 	    System.out.println(rdn.nextInt(100));
 	}
 	for (int i = 0; i < 25; i++) {

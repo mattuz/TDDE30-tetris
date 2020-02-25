@@ -24,7 +24,7 @@ public class TetrisViewerOld
     public void show() {
 	frame.setLayout(new BorderLayout());
 	frame.add(textarea, BorderLayout.CENTER);
-	textarea.setFont(new Font("Monospaced", Font.PLAIN, 20));
+	textarea.setFont(new Font("Monospaced", Font.PLAIN, 20)); //Storleken på fonten.
 	frame.pack();
 	frame.setVisible(true);
     }

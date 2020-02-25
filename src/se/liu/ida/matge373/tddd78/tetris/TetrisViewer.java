@@ -24,9 +24,13 @@ public class TetrisViewer
 
 	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
 	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RightArrow");
+	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "UpArrow");
+	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "DownArrow");
 
 	am.put("LeftArrow", new ArrowMovement("LeftArrow"));
 	am.put("RightArrow", new ArrowMovement("RightArrow"));
+	am.put("UpArrow", new ArrowMovement("UpArrow"));
+	am.put("DownArrow", new ArrowMovement("DownArrow"));
     }
 
     private class ArrowMovement extends AbstractAction {
@@ -42,6 +46,12 @@ public class TetrisViewer
 	    }
 	    else if (command.equalsIgnoreCase("RightArrow")) {
 	        board.moveRight();
+	    }
+	    else if (command.equalsIgnoreCase("UpArrow")) {
+	        board.rotate(true);
+	    }
+	    else if (command.equalsIgnoreCase("DownArrow")) {
+	        board.rotate(false);
 	    }
 	}
     }
