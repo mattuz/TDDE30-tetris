@@ -93,33 +93,50 @@ public class Board
     }
 
     public void moveRight() {
-	if (hasCollision()) {
-	    fallingX -= 1;
+	/*if (hasCollision() && fallingX == width) {
+	    fallingX -= 0; //Testar med 0
 	    notifyListeners();
 	} else {
 	    fallingX += 1;
 	    notifyListeners();
 	    System.out.println(fallingX);
 	    System.out.println(getSquares(fallingX, fallingY));
+	}*/
+	fallingX += 2;
+	fallingX -=1;
+	notifyListeners();
+	if (hasCollision()) {
+	    fallingX -=1;
+	    notifyListeners();
 	}
     }
 
     public void moveLeft() {
-	if (hasCollision()) {
-	    fallingX += 1;
+	/*if (hasCollision() && fallingX == 2) {
+	    fallingX += 0; //Testar med 0
 	    notifyListeners();
 	} else {
 	    fallingX -= 1;
 	    notifyListeners();
 	    System.out.println(fallingX);
 	    System.out.println(getSquares(fallingX, fallingY));
+	}*/
+	fallingX -= 2;
+	fallingX +=1;
+	notifyListeners();
+	if (hasCollision()) {
+	    fallingX +=1;
+	    notifyListeners();
 	}
     }
 
 
     public void tick() {
         if (falling != null && fallingY < height + 2) {
-           /*if (hasCollision()) {
+            fallingY += 2;
+            fallingY -= 1;
+            notifyListeners();
+           if (hasCollision()) {
                 fallingY -= 1;
                 notifyListeners();
 	       for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
@@ -132,35 +149,33 @@ public class Board
 
 	       }
 	       falling = null;
-	    } else {*/
-            fallingY += 1;
+	    }/* else {
+            fallingY += 2;
+            fallingY -= 1;
 	    System.out.println(hasCollision());
-            notifyListeners();}
-	//}
+            notifyListeners();}*/
+	}
 	if (falling == null || fallingY > height + 2) {
+	    int boardmiddle = (width +2)/2;
 	    falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
 	    fallingY = 2;
-	    fallingX = (width+2) / 2; //ändrat dessa
+	    fallingX = boardmiddle; //ändrat dessa
 	    notifyListeners();
 	}
     }
 
-    /*public boolean collisionHelperRight() {
-	if ()
-    }*/
 
     public boolean hasCollision() {
 	if (falling != null) {
 	    for (int i = 0; i < falling.getPolyWidth(); i++) {
 		for (int j = 0; j < falling.getPolyHeight(); j++) {
 		    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
-			if (squares[fallingX + i + 1][fallingY + j] != SquareType.EMPTY ||
-			    squares[fallingX + i - 1][fallingY + j] != SquareType.EMPTY) {
+			if (squares[fallingX + i ][fallingY + j] != SquareType.EMPTY /*||
+			    squares[fallingX + i][fallingY + j + 1] != SquareType.EMPTY*/) {
 			    System.out.println("Stoppa");
 			    return true;
 			}
 		    }
-
 		}
 	    }
 	}
