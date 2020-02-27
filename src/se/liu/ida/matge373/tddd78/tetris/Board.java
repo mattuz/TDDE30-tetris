@@ -20,7 +20,7 @@ public class Board
     public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
-	this.squares = new SquareType[height + 4][width + 4]; //Skriva en "Frameconstant"?
+	this.squares = new SquareType[height + 4][width + 4]; //Skriva en "Frameconstant"? //Jag har vä
 	for (int i = 2; i < width + 2; i++) {
 	    for (int j = 2; j < height + 2; j++) {
 		squares[j][i] = SquareType.EMPTY;
@@ -86,23 +86,12 @@ public class Board
     }
 
     private void notifyListeners() {
-
 	for (BoardListener listeners : listenerlist) {
-	    System.out.println("Nu ska den ha uppdaterats");
 	    listeners.boardChanged();
 	}
     }
 
     public void moveRight() {
-	/*if (hasCollision() && fallingX == width) {
-	    fallingX -= 0; //Testar med 0
-	    notifyListeners();
-	} else {
-	    fallingX += 1;
-	    notifyListeners();
-	    System.out.println(fallingX);
-	    System.out.println(getSquares(fallingX, fallingY));
-	}*/
 	fallingX += 2;
 	fallingX -= 1;
 	notifyListeners();
@@ -113,15 +102,6 @@ public class Board
     }
 
     public void moveLeft() {
-	/*if (hasCollision() && fallingX == 2) {
-	    fallingX += 0; //Testar med 0
-	    notifyListeners();
-	} else {
-	    fallingX -= 1;
-	    notifyListeners();
-	    System.out.println(fallingX);
-	    System.out.println(getSquares(fallingX, fallingY));
-	}*/
 	fallingX -= 2;
 	fallingX += 1;
 	notifyListeners();
@@ -195,8 +175,8 @@ public class Board
 	    }
 	    if (falling == null || fallingY > height + 2) {
 		int boardmiddle = (width + 2) / 2;
-		//falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
-		falling = new TetrominoMaker().getPoly(0);
+		falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
+		//falling = new TetrominoMaker().getPoly(0); //Används bara för test
 		fallingY = 2;
 		fallingX = boardmiddle; //ändrat dessa
 		if (hasCollision()) {
@@ -210,43 +190,45 @@ public class Board
 	removeLines();
     }
 
-    public boolean checkLines(int y) {
+    public boolean checkLines(int y) { //Ändra samtliga squares till getSquares istället. Då behövs inte +2.
         SquareType memorysquare = null;
         int memorycounter = 0;
 
-	for (int i = 0; i < width; i++) {
+	for (int i = 2; i < width +2; i++) {
 	    if (memorysquare == null) {
 	        memorysquare = squares[i][y];
 	    }
-	    if (memorysquare == squares[i][y] && squares[i][y] != SquareType.EMPTY) {
+	    if (squares[i][y] != SquareType.EMPTY) {
 	        memorysquare = squares[i][y];
 	        memorycounter += 1;
 	    }
 	}
-	//System.out.println(memorycounter);
-	return memorycounter == width-1;
+	return memorycounter == width;
     }
 
     public void removeLines() {
-	for (int i = 0; i < height; i++) {
-	    if (checkLines(height-1)) {
-		for (int j = 0; j < width; j++) {
-		    squares[i][j] = SquareType.EMPTY;
-		    for (int k = 0; k < i; k++) {
-			squares[j][k] = squares[j][k+1];
+	for (int y = 2; y < height + 2; y++) {
+	    if (checkLines(y)) {
+		System.out.println(checkLines(y));
+		for (int x = 2; x < width + 2; x++) {
+		    for (int k = y ; k > 2 ; k--) {
+
+			squares[x][k] = squares[x][k-1];
+			notifyListeners();
 		    }
 		}
 	    }
 	}
+	notifyListeners();
     }
+
 
     public boolean hasCollision() {
 	if (falling != null) {
 	    for (int i = 0; i < falling.getPolyWidth(); i++) {
 		for (int j = 0; j < falling.getPolyHeight(); j++) {
 		    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
-			if (squares[fallingX + i][fallingY + j] != SquareType.EMPTY /*||
-			    squares[fallingX + i][fallingY + j + 1] != SquareType.EMPTY*/) {
+			if (squares[fallingX + i][fallingY + j] != SquareType.EMPTY) {
 			    System.out.println("Stoppa");
 			    return true;
 			}
