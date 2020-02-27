@@ -93,6 +93,7 @@ public class Board
     }
 
     public void moveRight() {
+	//TODO: Ändra notifyern här
 	fallingX += 2;
 	fallingX -= 1;
 	notifyListeners();
@@ -103,6 +104,7 @@ public class Board
     }
 
     public void moveLeft() {
+        //TODO: Ändra notifyern här
 	fallingX -= 2;
 	fallingX += 1;
 	notifyListeners();
@@ -110,7 +112,9 @@ public class Board
 	    fallingX += 1;
 	    notifyListeners();
 	}
+
     }
+    //TODO: notifiers behövs inte alls lika ofta. Slutet på varje funktion/metod.
 
     public void rotate(boolean right) {
 	Poly oldfalling = falling;
@@ -134,6 +138,7 @@ public class Board
 	        notifyListeners();
 	    }
 	}
+	//TODO: Ändra notifyern här
     }
 
     public Poly rotateRight() {
@@ -152,12 +157,14 @@ public class Board
     public void tick() {
 	if (!gameover) {
 	    if (falling != null && fallingY < height + 2) {
-		fallingY += 2;
-		fallingY -= 1;
-		notifyListeners();
+		//fallingY += 2;
+		//TODO: ändra så att den inte notifyar förrän den är "redo".
+		fallingY += 1;
+		//notifyListeners();
 		if (hasCollision()) {
 		    fallingY -= 1;
 		    notifyListeners();
+		    // TODO: bryt ut till funktion
 		    for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
 			for (int j = 0; j < falling.getPolyHeight(); j++) {
 			    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
@@ -166,15 +173,15 @@ public class Board
 			    }
 			}
 
-		    }
+		    }//TODO: removelines behöver inte köras varje tick.
 		    falling = null;
 		}
 	    }
-	    if (falling == null || fallingY > height + 2) {
-		int boardmiddle = (width + 2) / 2;
+	    if (falling == null) {
+		int boardmiddle = (width + 2) / 2; //width +2 för att tetrominon ska hamna ett steg till höger. Snyggare.
 		falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
 		//falling = new TetrominoMaker().getPoly(0); //Används bara för test
-		fallingY = 2;
+		fallingY = 2; //outside är på 0 & 1, därför sätts den till 2.
 		fallingX = boardmiddle; //ändrat dessa
 		if (hasCollision()) {
 		    falling = null;

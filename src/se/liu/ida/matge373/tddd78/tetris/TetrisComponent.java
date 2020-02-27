@@ -11,7 +11,8 @@ public class TetrisComponent extends JComponent implements BoardListener
 {
     private Board board;
     private EnumMap<SquareType, Color> tetromino = new EnumMap<>(SquareType.class);
-    private int squareconstant = 40; //Storleken på square och hur den ska ritas ut i fönstret.
+    private static final int SQUARECONSTANT = 40; //Storleken på square och hur den ska ritas ut i fönstret.
+    //TODO: konstanterna ska skrivas som ovan!
     private int lowercorner = 40; //Används för den koordinaten nere i högra hörnet på square.
 
     public TetrisComponent(final Board board) {
@@ -25,8 +26,8 @@ public class TetrisComponent extends JComponent implements BoardListener
 
     @Override public Dimension getPreferredSize() { //Används inte denna så är det egentligen ingen mening att den extendar JComponent.
 	super.getPreferredSize();
-	return new Dimension((board.getWidth()) * squareconstant,
-			     (board.getHeight()) * squareconstant); //Ska den bara vara såhär kanske?
+	return new Dimension((board.getWidth()) * SQUARECONSTANT,
+			     (board.getHeight()) * SQUARECONSTANT); //Ska den bara vara såhär kanske?
 
     }
 
@@ -50,10 +51,10 @@ public class TetrisComponent extends JComponent implements BoardListener
 	for (int i = 0; i < board.getHeight(); i++) {
 	    for (int j = 0; j < board.getWidth(); j++) {
 	        g2d.setColor(tetromino.get(board.getSquareAt(i,j)));
-		g2d.fillRect(i*squareconstant, j*squareconstant,
-			     j*squareconstant + lowercorner, i * squareconstant + lowercorner);
+		g2d.fillRect(i * SQUARECONSTANT, j * SQUARECONSTANT,
+			     j * SQUARECONSTANT + lowercorner, i * SQUARECONSTANT + lowercorner);
 		g2d.setColor(BLACK);
-	        g2d.drawRect(i * squareconstant, j * squareconstant, squareconstant, squareconstant);
+	        g2d.drawRect(i * SQUARECONSTANT, j * SQUARECONSTANT, SQUARECONSTANT, SQUARECONSTANT);
 	    }
 	}
 

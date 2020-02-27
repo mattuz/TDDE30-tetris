@@ -4,11 +4,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Random;
 
+//Gammal test, från lab2. Används inte.
 
-
+/**
+ *Gammal test, från lab2. Används inte.
+ */
 public class BoardTest
 {
-
     private static Random rdn = new Random();
 
     public static void main(String[] args) {
@@ -23,6 +25,9 @@ public class BoardTest
 		//v1.show();
 	    }
 	};
+	/*
+	* test
+	* */
 	final Timer clockTimer = new Timer(1000, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
