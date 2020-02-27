@@ -82,6 +82,5 @@ public class TetrisViewer
 	frame.add(boardgraphics, BorderLayout.CENTER);
 	frame.pack();
 	frame.setVisible(true);
-	//keyBindings();
     }
 }

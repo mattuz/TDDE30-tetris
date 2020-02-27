@@ -1,7 +1,6 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +10,7 @@ public class Board
     private int width;
     private int height;
     private Random rdn = new Random();
-    private Poly falling; //Idea tycker att denna ska sättas till null. Är det verkligen nödvändigt?
+    private Poly falling = null; //Idea tycker att denna ska sättas till null. Är det verkligen nödvändigt?
     private int fallingX;
     private int fallingY;
     private List<BoardListener> listenerlist = new ArrayList<>();
@@ -50,7 +49,7 @@ public class Board
     }
 
 
-    public void rdnBoard(/*Board board*/) {
+    public void rdnBoard() {
 	for (int i = 0; i < height; i++) {
 	    for (int j = 0; j < width; j++) {
 		squares[i][j] = SquareType.values()[rdn.nextInt(7)];
@@ -72,12 +71,14 @@ public class Board
 		int j = y + 2 - fallingY;
 
 		if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
-		    return squares[x + 2][y + 2];
+		    return getSquares(x, y);
+		   // return squares[x + 2][y + 2];
 		}
 		return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	    }
 	}
-	return squares[x + 2][y + 2];
+	return getSquares(x,y);
+	//return squares[x + 2][y + 2];
     }
 
     public void addBoardListener(BoardListener bl) {
@@ -167,11 +168,7 @@ public class Board
 
 		    }
 		    falling = null;
-		}/* else {
-            fallingY += 2;
-            fallingY -= 1;
-	    System.out.println(hasCollision());
-            notifyListeners();}*/
+		}
 	    }
 	    if (falling == null || fallingY > height + 2) {
 		int boardmiddle = (width + 2) / 2;
@@ -194,12 +191,12 @@ public class Board
         SquareType memorysquare = null;
         int memorycounter = 0;
 
-	for (int i = 2; i < width +2; i++) {
+	for (int i = 0; i < width ; i++) {
 	    if (memorysquare == null) {
-	        memorysquare = squares[i][y];
+	        memorysquare = getSquares(i, y);
 	    }
-	    if (squares[i][y] != SquareType.EMPTY) {
-	        memorysquare = squares[i][y];
+	    if (getSquares(i, y) != SquareType.EMPTY) {
+	        memorysquare = getSquares(i, y);
 	        memorycounter += 1;
 	    }
 	}
@@ -207,13 +204,13 @@ public class Board
     }
 
     public void removeLines() {
-	for (int y = 2; y < height + 2; y++) {
+	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
 		System.out.println(checkLines(y));
-		for (int x = 2; x < width + 2; x++) {
+		for (int x = 0; x < width; x++) {
 		    for (int k = y ; k > 2 ; k--) {
 
-			squares[x][k] = squares[x][k-1];
+			squares[x+2][k+2] = getSquares(x, k-1); /*squares[x][k] = squares[x][k-1]*/
 			notifyListeners();
 		    }
 		}
