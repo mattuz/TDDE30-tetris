@@ -19,10 +19,10 @@ public class Board
     public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
-	this.squares = new SquareType[height + 4][width + 4]; //Skriva en "Frameconstant"? //Jag har vä
+	this.squares = new SquareType[width + 4][height + 4];  //Bytt här (height +4 , width +4)
 	for (int i = 2; i < width + 2; i++) {
 	    for (int j = 2; j < height + 2; j++) {
-		squares[j][i] = SquareType.EMPTY;
+		squares[i][j] = SquareType.EMPTY; //Bytt här (j, i)
 		notifyListeners();
 	    }
 	}
@@ -50,8 +50,8 @@ public class Board
 
 
     public void rdnBoard() {
-	for (int i = 0; i < height; i++) {
-	    for (int j = 0; j < width; j++) {
+	for (int i = 0; i < width; i++) {
+	    for (int j = 0; j < height; j++) {
 		squares[i][j] = SquareType.values()[rdn.nextInt(7)];
 		notifyListeners();
 	    }
@@ -62,23 +62,23 @@ public class Board
 	if (falling != null) {
 	    int tetroheight = falling.getPolyHeight() - 1; //Kollar höjden på falling
 	    int tetrowidth = falling.getPolyWidth() - 1; //Bredden
+	    int boardX = x + 2;
+	    int boardY = y + 2;
 
 
-	    if (fallingX <= x + 2 && x + 2 <= fallingX + tetroheight && fallingY <= y + 2 && //+2 överallt!!!!
-		y + 2 <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
-		int i = x + 2 -
-			fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
-		int j = y + 2 - fallingY;
+	    if (fallingX <= boardX && boardX <= fallingX + tetroheight && fallingY <= boardY &&
+		boardY <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
+
+	        int i = boardX - fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
+		int j = boardY - fallingY;
 
 		if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
 		    return getSquares(x, y);
-		   // return squares[x + 2][y + 2];
 		}
 		return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	    }
 	}
 	return getSquares(x,y);
-	//return squares[x + 2][y + 2];
     }
 
     public void addBoardListener(BoardListener bl) {
@@ -93,52 +93,40 @@ public class Board
     }
 
     public void moveRight() {
-	//TODO: Ändra notifyern här
-	fallingX += 2;
-	fallingX -= 1;
-	notifyListeners();
+	fallingX += 1;
 	if (hasCollision()) {
 	    fallingX -= 1;
-	    notifyListeners();
 	}
+	notifyListeners();
     }
 
     public void moveLeft() {
-        //TODO: Ändra notifyern här
-	fallingX -= 2;
-	fallingX += 1;
-	notifyListeners();
+	fallingX -= 1;
 	if (hasCollision()) {
 	    fallingX += 1;
-	    notifyListeners();
 	}
-
+	notifyListeners();
     }
-    //TODO: notifiers behövs inte alls lika ofta. Slutet på varje funktion/metod.
 
     public void rotate(boolean right) {
 	Poly oldfalling = falling;
         if (right) {
 	    falling = rotateRight();
-	    notifyListeners();
 	    if (hasCollision()) {
 		System.out.println("Det trodde du va");
 	        falling = oldfalling;
-	        notifyListeners();
 	    }
 	}
         if (!right) {
 	    for (int i = 0; i < 3; i++) { //Rotera 3 ggr för att få en vänsterrotation.
 		falling = rotateRight();
 	    }
-	    notifyListeners();
 	    if (hasCollision()) {
 		System.out.println("Det trodde du va");
 	        falling = oldfalling;
-	        notifyListeners();
 	    }
 	}
-	//TODO: Ändra notifyern här
+	notifyListeners();
     }
 
     public Poly rotateRight() {
@@ -154,26 +142,24 @@ public class Board
 	return newPoly;
     }
 
+    public void fallingToBoard() {
+	for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
+	    for (int j = 0; j < falling.getPolyHeight(); j++) {
+		if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
+		    squares[fallingX + i][fallingY + j] = falling.getPolyminoAt(i, j);
+		}
+	    }
+	}
+    }
+
     public void tick() {
 	if (!gameover) {
 	    if (falling != null && fallingY < height + 2) {
-		//fallingY += 2;
-		//TODO: ändra så att den inte notifyar förrän den är "redo".
 		fallingY += 1;
-		//notifyListeners();
 		if (hasCollision()) {
 		    fallingY -= 1;
-		    notifyListeners();
-		    // TODO: bryt ut till funktion
-		    for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
-			for (int j = 0; j < falling.getPolyHeight(); j++) {
-			    if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
-				squares[fallingX + i][fallingY + j] = falling.getPolyminoAt(i, j);
-				notifyListeners();
-			    }
-			}
-
-		    }//TODO: removelines behöver inte köras varje tick.
+		    fallingToBoard();
+		    removeLines();
 		    falling = null;
 		}
 	    }
@@ -182,16 +168,14 @@ public class Board
 		falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
 		//falling = new TetrominoMaker().getPoly(0); //Används bara för test
 		fallingY = 2; //outside är på 0 & 1, därför sätts den till 2.
-		fallingX = boardmiddle; //ändrat dessa
+		fallingX = boardmiddle;
 		if (hasCollision()) {
 		    falling = null;
-		    notifyListeners();
 		    gameover = true;
 		}
-		notifyListeners();
 	    }
 	}
-	removeLines();
+	notifyListeners();
     }
 
     public boolean checkLines(int y) { //Ändra samtliga squares till getSquares istället. Då behövs inte +2.
@@ -213,12 +197,9 @@ public class Board
     public void removeLines() {
 	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
-		System.out.println(checkLines(y));
 		for (int x = 0; x < width; x++) {
 		    for (int k = y ; k > 2 ; k--) {
-
-			squares[x+2][k+2] = getSquares(x, k-1); /*squares[x][k] = squares[x][k-1]*/
-			notifyListeners();
+			squares[x+2][k+2] = getSquares(x, k-1);
 		    }
 		}
 	    }
