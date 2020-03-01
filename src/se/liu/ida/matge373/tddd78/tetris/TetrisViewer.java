@@ -1,6 +1,7 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
 import javax.swing.*;
+import javax.swing.plaf.IconUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -116,5 +117,6 @@ public class TetrisViewer extends AbstractAction
 	frame.pack();
 	frame.setVisible(true);
 	frame.setJMenuBar(menuBar);
+
     }
 }
