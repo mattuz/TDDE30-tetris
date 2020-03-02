@@ -2,11 +2,17 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 
 public class IconPainter extends JComponent
 {
-    final ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("aa.jpg"));
+    final private ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("aa.jpg"));
+    private final JFrame frame = new JFrame("Graphics2D Test");
+
+    public JFrame getFrame() {
+	return frame;
+    }
 
     public void paintComponent(final Graphics g) {
 	final Graphics2D g2d = (Graphics2D) g;
@@ -31,12 +37,20 @@ public class IconPainter extends JComponent
 
 	g2d.setTransform(old);
     }
-    public void pictureMaker() {
+    public void pictureMaker(boolean visible) {
+        IconPainter pic = new IconPainter();
 	final JFrame frame = new JFrame("Graphics2D Test");
 	frame.setLayout(new GridLayout(1, 1));
 	frame.setSize(800, 800);
-	frame.add(new IconPainter());
-	frame.setVisible(true);
+	frame.add(pic);
+	if (visible) {
+	    frame.setVisible(true);
+	}
+	else {
+	    frame.remove(pic); //TODO ????
+	    frame.setVisible(false);
+	    frame.dispose();
+	}
     }
 }
 

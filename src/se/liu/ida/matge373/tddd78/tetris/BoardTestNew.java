@@ -7,9 +7,10 @@ import java.awt.event.ActionEvent;
 public class BoardTestNew
 {
     public static void main(String[] args) {
-	Board b2 = new Board(10, 20);
+	Board b2 = new Board(10, 18);
 	TetrisViewer v1 = new TetrisViewer(b2);
 	//IconPainter testis = new IconPainter(); //Vet inte hur jag ska få denna att visas nån sek innan spelet börjar..
+	v1.startGame(true);
 	b2.addBoardListener(v1.getBoardgraphics());
 	b2.hasCollision();
 	v1.keyBindings();

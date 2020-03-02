@@ -17,12 +17,21 @@ public class TetrisViewer extends AbstractAction
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu options = new JMenu("Options");
     private JMenuItem menuItem = null;
+    private IconPainter picture = null;
 
 
     public TetrisViewer(final Board board) {
 	this.board = board;
 	this.boardgraphics = new TetrisComponent(board); //Här tar den in boarden som i sin tur kommer hanteras av paintcomponent och dylikt.
 	menuOptions();
+}
+
+public void startGame(boolean visible) { //funkar inte.. //TODO ????
+    this.picture = new IconPainter();
+    picture.pictureMaker(visible);
+    if (!visible) {
+        picture = null;
+    }
 }
 
     public void menuOptions() {
@@ -97,12 +106,15 @@ public class TetrisViewer extends AbstractAction
 
 	    public void actionPerformed(final ActionEvent actionEvent) {
 		board.tick();
+		picture.getFrame().setVisible(false); // TODO ?!?!?!?!??!
+		picture.getFrame().dispose();
 	    }
 	};
 	final Timer clockTimer = new Timer(1000, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
     }
+
 
 
 
