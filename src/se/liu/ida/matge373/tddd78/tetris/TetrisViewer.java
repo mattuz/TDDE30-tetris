@@ -108,6 +108,7 @@ public void startGame(boolean visible) { //funkar inte.. //TODO ????
 		board.tick();
 		picture.getFrame().setVisible(false); // TODO ?!?!?!?!??!
 		picture.getFrame().dispose();
+		//picture.pictureMaker(false); //Denna tar bort både spelplanen och bilden..
 	    }
 	};
 	final Timer clockTimer = new Timer(1000, doOneStep);

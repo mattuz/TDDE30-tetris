@@ -50,6 +50,7 @@ public class IconPainter extends JComponent
 	    frame.remove(pic); //TODO ????
 	    frame.setVisible(false);
 	    frame.dispose();
+	    System.exit(0); // Denna gör inget :(
 	}
     }
 }
