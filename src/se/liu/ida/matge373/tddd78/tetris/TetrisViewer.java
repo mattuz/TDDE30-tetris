@@ -38,8 +38,11 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
     public void menuOptions() {
         menuItem = new JMenuItem("Avsluta", MouseEvent.BUTTON1);
         scoreItem = new JMenuItem("Score: " + board.getScore());
+        JMenuItem menuItem2 = new JMenuItem("Nytt spel", MouseEvent.BUTTON1);
 	options.add(menuItem);
+	options.add(menuItem2);
 	menuBar.add(options);
+	menuItem2.addActionListener(this);
 	menuItem.addActionListener(this);
 	menuBar.add(Box.createHorizontalGlue());
 	menuBar.add(scoreItem); //TODO hur uppdaterar jag denna? Ska enligt nätet gå att göra med en action.
@@ -66,10 +69,25 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 
     @Override public void actionPerformed(final ActionEvent actionEvent) { //Hur gör jag för att få denna att fungera i den ovan? Eller tvärtom? //TODO 2 actions i samma klass..
 	if ("Avsluta".equals(actionEvent.getActionCommand())) {
-
 	    if (JOptionPane.showConfirmDialog(null, "Vill du avsluta?", "Varning",
 					      JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 	        System.exit(0);
+	    }
+	}
+	else if ("Nytt spel".equals(actionEvent.getActionCommand())) {
+	    if (JOptionPane.showConfirmDialog(null, "Spela igen?", "Nytt spel",
+					      JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+	        frame.dispose();
+		Board b2 = new Board(8, 8);
+		TetrisViewer v1 = new TetrisViewer(b2);
+		v1.startGame(true);
+		b2.addBoardListener(v1.getBoardgraphics());
+		v1.keyBindings();
+		v1.show();
+		v1.doStep();
+	    }
+	    else {
+	        System.exit(0); //Får man ha med detta?
 	    }
 	}
     }

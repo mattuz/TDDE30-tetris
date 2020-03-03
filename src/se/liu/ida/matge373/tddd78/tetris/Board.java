@@ -282,4 +282,8 @@ public class Board
     public int getScore() {
 	return score;
     }
+
+    public boolean isGameover() {
+	return gameover;
+    }
 }
