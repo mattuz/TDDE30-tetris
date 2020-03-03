@@ -16,6 +16,8 @@ public class Board
     private List<BoardListener> listenerlist = new ArrayList<>();
     private boolean gameover = false;
     private int score = 0;
+    private int scorekeeper = 0;
+
 
     public Board(final int width, final int height) {
 	this.width = width;
@@ -200,6 +202,8 @@ public class Board
     public void removeLines() {
 	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
+	        scorekeeper += 1; //Räknar hur många gånger på raken checklines ger true.
+		System.out.println(scorekeeper);
 		for (int x = 0; x < width; x++) {
 		    for (int k = y ; k > 2 ; k--) {
 			squares[x+2][k+2] = getSquares(x, k-1);
@@ -207,12 +211,30 @@ public class Board
 		}
 	    }
 	}
+	//Typ här vill jag köra score-uppdateringen.
+	scoreCalculator();
 	notifyListeners();
+	scorekeeper = 0;
+	System.out.println(score);
     }
 
-    public void scoreKeeper() { //Det jag vill att denna ska göra är att på något sätt kolla hur många gånger på raken Checklines == width ger true. 
-        int scorekeeper = 0;
-
+    public void scoreCalculator() { //Räknar ut poängen baserat på antalet lines som tas bort.
+	switch (scorekeeper) {
+	    case 1:
+	        score += 100;
+	        break;
+	    case 2:
+	        score += 300; //TODO konstanter
+	        break;
+	    case 3:
+	        score += 500;
+	    	break;
+	    case 4:
+	        score += 800;
+	        break;
+	    default:
+	        break;
+	}
     }
 
 
@@ -257,5 +279,7 @@ public class Board
 	return fallingY;
     }
 
-
+    public int getScore() {
+	return score;
+    }
 }

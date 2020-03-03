@@ -19,6 +19,8 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
     private final JMenu options = new JMenu("Options");
     private JMenuItem menuItem = null;
     private IconPainter picture = null;
+    private JMenuItem scoreItem = null;
+
 
 
     public TetrisViewer(final Board board) {
@@ -35,16 +37,18 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 
     public void menuOptions() {
         menuItem = new JMenuItem("Avsluta", MouseEvent.BUTTON1);
+        scoreItem = new JMenuItem("Score: " + board.getScore());
 	options.add(menuItem);
 	menuBar.add(options);
 	menuItem.addActionListener(this);
+	menuBar.add(Box.createHorizontalGlue());
+	menuBar.add(scoreItem); //TODO hur uppdaterar jag denna? Ska enligt nätet gå att göra med en action.
     }
 
 
     public void keyBindings() {
 	InputMap im = boardgraphics.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	ActionMap am = boardgraphics.getActionMap();
-
 
 
 	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
@@ -105,6 +109,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 
 	    public void actionPerformed(final ActionEvent actionEvent) {
 		board.tick();
+		scoreItem.setText("Score: " + board.getScore()); //FUNKAR!!! Ha den inte här dock, inte optimalt
 		frame.remove(picture); //tar bort bilden. Inte säker om denna ska ligga och köras varje tick dock.. Gör en ny timer kke?
 		}
 	};
