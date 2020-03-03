@@ -195,12 +195,11 @@ public class Board
 	return memorycounter == width;
     }
 
+
+
     public void removeLines() {
 	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
-		score += 100; //Testar score
-		System.out.println(score);
-
 		for (int x = 0; x < width; x++) {
 		    for (int k = y ; k > 2 ; k--) {
 			squares[x+2][k+2] = getSquares(x, k-1);
@@ -209,6 +208,11 @@ public class Board
 	    }
 	}
 	notifyListeners();
+    }
+
+    public void scoreKeeper() { //Det jag vill att denna ska göra är att på något sätt kolla hur många gånger på raken Checklines == width ger true. 
+        int scorekeeper = 0;
+
     }
 
 
