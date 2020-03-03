@@ -15,6 +15,7 @@ public class Board
     private int fallingY;
     private List<BoardListener> listenerlist = new ArrayList<>();
     private boolean gameover = false;
+    private int score = 0;
 
     public Board(final int width, final int height) {
 	this.width = width;
@@ -142,8 +143,8 @@ public class Board
 	return newPoly;
     }
 
-    public void fallingToBoard() {
-	for (int i = 0; i < falling.getPolyWidth(); i++) { //"Fäster" tetrominon på boarden.
+    public void fallingToBoard() {//"Fäster" tetrominon på boarden.
+	for (int i = 0; i < falling.getPolyWidth(); i++) {
 	    for (int j = 0; j < falling.getPolyHeight(); j++) {
 		if (falling.getPolyminoAt(i, j) != SquareType.EMPTY) {
 		    squares[fallingX + i][fallingY + j] = falling.getPolyminoAt(i, j);
@@ -165,8 +166,8 @@ public class Board
 	    }
 	    if (falling == null) {
 		int boardmiddle = (width + 2) / 2; //width +2 för att tetrominon ska hamna ett steg till höger. Snyggare.
-		falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
-		//falling = new TetrominoMaker().getPoly(0); //Används bara för test
+		//falling = new TetrominoMaker().getPoly(rdn.nextInt(7));
+		falling = new TetrominoMaker().getPoly(0); //Används bara för test
 		fallingY = 2; //outside är på 0 & 1, därför sätts den till 2.
 		fallingX = boardmiddle;
 		if (hasCollision()) {
@@ -197,6 +198,9 @@ public class Board
     public void removeLines() {
 	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
+		score += 100; //Testar score
+		System.out.println(score);
+
 		for (int x = 0; x < width; x++) {
 		    for (int k = y ; k > 2 ; k--) {
 			squares[x+2][k+2] = getSquares(x, k-1);

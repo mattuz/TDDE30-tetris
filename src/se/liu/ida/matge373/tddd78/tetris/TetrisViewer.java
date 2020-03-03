@@ -2,6 +2,7 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 import javax.swing.*;
 import javax.swing.plaf.IconUIResource;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -9,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 
 
-public class TetrisViewer extends AbstractAction
+public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På något sätt lägga in menyalternativet i metoden nedan.
 {
     private JFrame frame = new JFrame();
     private TetrisComponent boardgraphics;
@@ -26,13 +27,11 @@ public class TetrisViewer extends AbstractAction
 	menuOptions();
 }
 
-public void startGame(boolean visible) { //funkar inte.. //TODO ????
-    this.picture = new IconPainter();
-    picture.pictureMaker(visible);
-    if (!visible) {
-        picture = null;
+    public void startGame(boolean visible) { //Lägger till bilden på spelplanen. Tas bort när det finns en falling.
+        this.picture = new IconPainter(frame);
+        picture.pictureMaker(picture);
     }
-}
+
 
     public void menuOptions() {
         menuItem = new JMenuItem("Avsluta", MouseEvent.BUTTON1);
@@ -61,7 +60,7 @@ public void startGame(boolean visible) { //funkar inte.. //TODO ????
 	am.put("Avsluta", new ArrowMovement("Avsluta"));
     }
 
-    @Override public void actionPerformed(final ActionEvent actionEvent) { //Hur gör jag för att få denna att fungera i den ovan? Eller tvärtom?
+    @Override public void actionPerformed(final ActionEvent actionEvent) { //Hur gör jag för att få denna att fungera i den ovan? Eller tvärtom? //TODO 2 actions i samma klass..
 	if ("Avsluta".equals(actionEvent.getActionCommand())) {
 
 	    if (JOptionPane.showConfirmDialog(null, "Vill du avsluta?", "Varning",
@@ -106,14 +105,13 @@ public void startGame(boolean visible) { //funkar inte.. //TODO ????
 
 	    public void actionPerformed(final ActionEvent actionEvent) {
 		board.tick();
-		picture.getFrame().setVisible(false); // TODO ?!?!?!?!??!
-		picture.getFrame().dispose();
-		//picture.pictureMaker(false); //Denna tar bort både spelplanen och bilden..
-	    }
+		frame.remove(picture); //tar bort bilden. Inte säker om denna ska ligga och köras varje tick dock.. Gör en ny timer kke?
+		}
 	};
 	final Timer clockTimer = new Timer(1000, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
+
     }
 
 

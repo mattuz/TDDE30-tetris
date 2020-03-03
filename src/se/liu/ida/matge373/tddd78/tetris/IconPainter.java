@@ -8,10 +8,11 @@ import java.awt.geom.AffineTransform;
 public class IconPainter extends JComponent
 {
     final private ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("aa.jpg"));
-    private final JFrame frame = new JFrame("Graphics2D Test");
+   private JFrame frame;
 
-    public JFrame getFrame() {
-	return frame;
+
+    public IconPainter(final JFrame frame) {
+	this.frame = frame;
     }
 
     public void paintComponent(final Graphics g) {
@@ -22,7 +23,7 @@ public class IconPainter extends JComponent
 	final AffineTransform old = g2d.getTransform();
 
 	// Steg 4: Gör ingenting (skala faktor 1)
-	final AffineTransform at = AffineTransform.getScaleInstance(2, 2);
+	final AffineTransform at = AffineTransform.getScaleInstance(1, 1);
 
 	// Steg 3:  Flytta (i "oskalade" koordinater)
 	at.translate(50,50);
@@ -37,21 +38,11 @@ public class IconPainter extends JComponent
 
 	g2d.setTransform(old);
     }
-    public void pictureMaker(boolean visible) {
-        IconPainter pic = new IconPainter();
-	final JFrame frame = new JFrame("Graphics2D Test");
+    public void pictureMaker(IconPainter pic) {
 	frame.setLayout(new GridLayout(1, 1));
 	frame.setSize(800, 800);
 	frame.add(pic);
-	if (visible) {
-	    frame.setVisible(true);
-	}
-	else {
-	    frame.remove(pic); //TODO ????
-	    frame.setVisible(false);
-	    frame.dispose();
-	    System.exit(0); // Denna gör inget :(
-	}
+	frame.setVisible(true);
     }
 }
 
