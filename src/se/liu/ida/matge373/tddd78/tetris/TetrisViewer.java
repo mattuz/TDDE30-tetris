@@ -22,6 +22,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
     private JMenuItem scoreItem = null;
     private String name = null;
     private HighscoreList highscorelist;
+    private StringBuilder score = new StringBuilder();
 
 
     public TetrisViewer(final Board board, final HighscoreList highscorelist) { //TODO kolla om detta ska göras såhär (Piotr)
@@ -37,10 +38,12 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
     }
 
     public String hiscoreLooper() { //TODO se till att detta fungerar!
-        StringBuilder stringscore = new StringBuilder();
 	for (int i = 0; i < highscorelist.getHighscores().size(); i++) {
-	    stringscore += String highscorelist.getHighscores().get(i).getPerson(); //Gör tyå såhär här. Ful lösning men funkar
+	    score.append(highscorelist.getHighscores().get(i).getPerson()).append(": "); //Gör tyå såhär här. Ful lösning men funkar
+	    score.append(highscorelist.getHighscores().get(i).getScore()).append("\n");
 	}
+	String scorestring = score.toString();
+	return scorestring;
     }
 
 
@@ -52,8 +55,8 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 	    if (name != null) {
 	        Highscore highscore = new Highscore(board.getScore(), name);
 		highscorelist.addHighscore(highscore);
-
-		JOptionPane.showMessageDialog(frame, highscorelist.getHighscores().get(0).getPerson() + " " + highscorelist.getHighscores().get(0).getScore());
+		highscorelist.getHighscores().sort(new ScoreComparator());
+		JOptionPane.showMessageDialog(frame, hiscoreLooper());
 
 	    }
 	}

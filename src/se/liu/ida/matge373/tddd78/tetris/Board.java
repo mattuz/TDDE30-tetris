@@ -203,9 +203,8 @@ public class Board
 	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
 	        scorekeeper += 1; //Räknar hur många gånger på raken checklines ger true.
-		System.out.println(scorekeeper);
 		for (int x = 0; x < width; x++) {
-		    for (int k = y ; k > 2 ; k--) {
+		    for (int k = y ; k > 0 ; k--) {
 			squares[x+2][k+2] = getSquares(x, k-1);
 		    }
 		}
@@ -224,7 +223,7 @@ public class Board
 	        score += 100;
 	        break;
 	    case 2:
-	        score += 300; //TODO konstanter
+	        score += 300; //TODO konstanter (??)
 	        break;
 	    case 3:
 	        score += 500;
