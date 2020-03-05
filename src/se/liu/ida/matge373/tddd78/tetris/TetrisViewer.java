@@ -1,5 +1,7 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
+import com.google.gson.Gson;
+
 import javax.swing.*;
 import javax.swing.plaf.IconUIResource;
 import javax.swing.text.JTextComponent;
@@ -57,6 +59,10 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? P√• n√
 		highscorelist.addHighscore(highscore);
 		highscorelist.getHighscores().sort(new ScoreComparator());
 		JOptionPane.showMessageDialog(frame, hiscoreLooper());
+		Gson gson = new Gson();
+		String listAsJson = gson.toJson(highscorelist);
+		JOptionPane.showMessageDialog(frame, listAsJson);
+
 
 	    }
 	}
