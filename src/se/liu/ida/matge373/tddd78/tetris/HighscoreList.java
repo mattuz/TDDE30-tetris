@@ -5,17 +5,19 @@ import java.util.List;
 
 public class HighscoreList
 {
-    private List<Highscore> highscores = new ArrayList<>();
+    private List<Highscore> highscores;
 
+    public HighscoreList() {
+        this.highscores = new ArrayList<>();
+    }
 
     public void addHighscore(Highscore highscore) {
         highscores.add(highscore);
     }
 
 
-
     public List<Highscore> getHighscores() {
-	return highscores;
+        return highscores;
     }
 
 }

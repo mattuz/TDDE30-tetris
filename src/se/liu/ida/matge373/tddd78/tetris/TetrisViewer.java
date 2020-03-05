@@ -20,11 +20,13 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
     private JMenuItem menuItem = null;
     private IconPainter picture = null;
     private JMenuItem scoreItem = null;
+    private String name = null;
+    private HighscoreList highscorelist;
 
 
-
-    public TetrisViewer(final Board board) {
+    public TetrisViewer(final Board board, final HighscoreList highscorelist) { //TODO kolla om detta ska göras såhär (Piotr)
 	this.board = board;
+	this.highscorelist = highscorelist;
 	this.boardgraphics = new TetrisComponent(board); //Här tar den in boarden som i sin tur kommer hanteras av paintcomponent och dylikt.
 	menuOptions();
 }
@@ -32,6 +34,29 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
     public void startGame(boolean visible) { //Lägger till bilden på spelplanen. Tas bort när det finns en falling.
         this.picture = new IconPainter(frame);
         picture.pictureMaker(picture);
+    }
+
+    public String hiscoreLooper() { //TODO se till att detta fungerar!
+        StringBuilder stringscore = new StringBuilder();
+	for (int i = 0; i < highscorelist.getHighscores().size(); i++) {
+	    stringscore += String highscorelist.getHighscores().get(i).getPerson(); //Gör tyå såhär här. Ful lösning men funkar
+	}
+    }
+
+
+
+    public void gameOverFunctions() {
+        if (board.isGameover() && name == null) {
+            name = JOptionPane.showInputDialog("Your score was: " + board.getScore() + "\n" + "Insert name gamer!");
+	    System.out.println(name);
+	    if (name != null) {
+	        Highscore highscore = new Highscore(board.getScore(), name);
+		highscorelist.addHighscore(highscore);
+
+		JOptionPane.showMessageDialog(frame, highscorelist.getHighscores().get(0).getPerson() + " " + highscorelist.getHighscores().get(0).getScore());
+
+	    }
+	}
     }
 
 
@@ -45,7 +70,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 	menuItem2.addActionListener(this);
 	menuItem.addActionListener(this);
 	menuBar.add(Box.createHorizontalGlue());
-	menuBar.add(scoreItem); //TODO hur uppdaterar jag denna? Ska enligt nätet gå att göra med en action.
+	menuBar.add(scoreItem);
     }
 
 
@@ -79,7 +104,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 					      JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 	        frame.dispose();
 		Board b2 = new Board(8, 8);
-		TetrisViewer v1 = new TetrisViewer(b2);
+		TetrisViewer v1 = new TetrisViewer(b2, highscorelist);
 		v1.startGame(true);
 		b2.addBoardListener(v1.getBoardgraphics());
 		v1.keyBindings();
@@ -129,6 +154,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 		board.tick();
 		scoreItem.setText("Score: " + board.getScore()); //FUNKAR!!! Ha den inte här dock, inte optimalt
 		frame.remove(picture); //tar bort bilden. Inte säker om denna ska ligga och köras varje tick dock.. Gör en ny timer kke?
+		gameOverFunctions();
 		}
 	};
 	final Timer clockTimer = new Timer(1000, doOneStep);
@@ -153,4 +179,6 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 	frame.setJMenuBar(menuBar);
 
     }
+
+
 }

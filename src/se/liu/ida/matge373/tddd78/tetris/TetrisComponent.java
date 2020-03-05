@@ -58,10 +58,6 @@ public class TetrisComponent extends JComponent implements BoardListener
 	        g2d.drawRect(i * SQUARECONSTANT, j * SQUARECONSTANT, SQUARECONSTANT, SQUARECONSTANT);
 	    }
 	}
-
-
-
-
     }
 
 

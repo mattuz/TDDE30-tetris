@@ -174,7 +174,7 @@ public class Board
 		fallingX = boardmiddle;
 		if (hasCollision()) {
 		    falling = null;
-		    gameover = true;
+		    gameover = true; //TODO kolla om det gå att få in game over här på något sätt.
 		}
 	    }
 	}

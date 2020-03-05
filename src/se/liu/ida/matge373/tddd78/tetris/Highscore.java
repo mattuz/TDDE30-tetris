@@ -9,4 +9,12 @@ public class Highscore
 	this.score = score;
 	this.person = person;
     }
+
+    public int getScore() {
+	return score;
+    }
+
+    public String getPerson() {
+	return person;
+    }
 }
