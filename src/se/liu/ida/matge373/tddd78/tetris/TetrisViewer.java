@@ -9,7 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På något sätt lägga in menyalternativet i metoden nedan.
@@ -41,8 +42,8 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 
     public String hiscoreLooper() { //TODO se till att detta fungerar!
 	for (int i = 0; i < highscorelist.getHighscores().size(); i++) {
-	    score.append(highscorelist.getHighscores().get(i).getPerson()).append(": "); //Gör tyå såhär här. Ful lösning men funkar
-	    score.append(highscorelist.getHighscores().get(i).getScore()).append("\n");
+	    score.append(highscorelist.getLcs().get(i).getPerson()).append(": "); //Gör tyå såhär här. Ful lösning men funkar
+	    score.append(highscorelist.getLcs().get(i).getScore()).append("\n");
 	}
 	String scorestring = score.toString();
 	return scorestring;
@@ -50,18 +51,21 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 
 
 
-    public void gameOverFunctions() {
+    public void gameOverFunctions() throws IOException, FileNotFoundException {
         if (board.isGameover() && name == null) {
             name = JOptionPane.showInputDialog("Your score was: " + board.getScore() + "\n" + "Insert name gamer!");
-	    System.out.println(name);
 	    if (name != null) {
 	        Highscore highscore = new Highscore(board.getScore(), name);
 		highscorelist.addHighscore(highscore);
 		highscorelist.getHighscores().sort(new ScoreComparator());
-		JOptionPane.showMessageDialog(frame, hiscoreLooper());
-		Gson gson = new Gson();
+		for (int i = 0; i < highscorelist.getLcs().size(); i++) {
+		    System.out.println(highscorelist.getLcs().get(i));
+		}
+		//JOptionPane.showMessageDialog(frame, hiscoreLooper()); //nullpointer
+		//JOptionPane.showMessageDialog(frame, hiscoreLooper());
+		/*Gson gson = new Gson();
 		String listAsJson = gson.toJson(highscorelist);
-		JOptionPane.showMessageDialog(frame, listAsJson);
+		JOptionPane.showMessageDialog(frame, listAsJson);*/
 
 
 	    }
@@ -163,8 +167,12 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 		board.tick();
 		scoreItem.setText("Score: " + board.getScore()); //FUNKAR!!! Ha den inte här dock, inte optimalt
 		frame.remove(picture); //tar bort bilden. Inte säker om denna ska ligga och köras varje tick dock.. Gör en ny timer kke?
-		gameOverFunctions();
+		try {
+		    gameOverFunctions();
+		} catch (IOException e) {
+		    e.printStackTrace();
 		}
+	    }
 	};
 	final Timer clockTimer = new Timer(1000, doOneStep);
 	clockTimer.setCoalesce(true);

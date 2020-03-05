@@ -16,6 +16,7 @@ public class IconPainter extends JComponent
     }
 
     public void paintComponent(final Graphics g) {
+        //TODO BILDEN ska läsas in i ett separat fönster först (eller att spelet inte syns när bilden är uppe).
 	final Graphics2D g2d = (Graphics2D) g;
 	g2d.setRenderingHint(	RenderingHints.KEY_ANTIALIASING,
 				     RenderingHints.VALUE_ANTIALIAS_ON);
