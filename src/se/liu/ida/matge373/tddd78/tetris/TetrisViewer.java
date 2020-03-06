@@ -42,8 +42,8 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 
     public String hiscoreLooper() { //TODO se till att detta fungerar!
 	for (int i = 0; i < highscorelist.getHighscores().size(); i++) {
-	    score.append(highscorelist.getLcs().get(i).getPerson()).append(": "); //Gör tyå såhär här. Ful lösning men funkar
-	    score.append(highscorelist.getLcs().get(i).getScore()).append("\n");
+	    score.append(highscorelist.getHighscores().get(i).getPerson()).append(": "); //Gör tyå såhär här. Ful lösning men funkar
+	    score.append(highscorelist.getHighscores().get(i).getScore()).append("\n");
 	}
 	String scorestring = score.toString();
 	return scorestring;
@@ -57,10 +57,10 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 	    if (name != null) {
 	        Highscore highscore = new Highscore(board.getScore(), name);
 		highscorelist.addHighscore(highscore);
+		System.out.println("HIGHSCORE: " + highscore.getPerson() + ": " + highscore.getScore() + " HAR LAGTS TILL!");
 		highscorelist.getHighscores().sort(new ScoreComparator());
-		for (int i = 0; i < highscorelist.getLcs().size(); i++) {
-		    System.out.println(highscorelist.getLcs().get(i));
-		}
+		System.out.println(hiscoreLooper());
+
 		//JOptionPane.showMessageDialog(frame, hiscoreLooper()); //nullpointer
 		//JOptionPane.showMessageDialog(frame, hiscoreLooper());
 		/*Gson gson = new Gson();
@@ -174,7 +174,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? På n�
 		}
 	    }
 	};
-	final Timer clockTimer = new Timer(1000, doOneStep);
+	final Timer clockTimer = new Timer(200, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
 

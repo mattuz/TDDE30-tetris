@@ -1,11 +1,15 @@
 package se.liu.ida.matge373.tddd78.tetris;
 
 
+import java.io.FileNotFoundException;
+
 public class BoardTestNew
 {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws FileNotFoundException {
 	Board b2 = new Board(8, 8);
-	HighscoreList hs = new HighscoreList();
+	final HighscoreList hs = new HighscoreList();
+	System.out.println(hs);
 	TetrisViewer v1 = new TetrisViewer(b2, hs);
 	v1.startGame(true);
 	v1.show();
