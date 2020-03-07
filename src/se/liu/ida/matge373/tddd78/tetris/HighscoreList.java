@@ -2,6 +2,8 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
@@ -36,9 +38,10 @@ public class HighscoreList
     public void saveScores() throws IOException, FileNotFoundException
     {
         Reader reader = new FileReader("Highscores");
+        //JsonObject parser = JsonParser.parseReader(reader).getAsJsonObject;
 
-        String jsonHighscore = gson.toJson(highscores);
-        + new Gson().toJson(reader, highscores); //någ sånt här kanske????
+        String jsonHighscore = gson.toJson(highscores) ;//+ gson.toJson(reader);
+        //gson.toJson(reader, HighscoreList.class);//någ sånt här kanske????
 
 
 
