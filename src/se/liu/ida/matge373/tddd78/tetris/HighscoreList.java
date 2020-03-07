@@ -35,8 +35,11 @@ public class HighscoreList
 
     public void saveScores() throws IOException, FileNotFoundException
     {
+        Reader reader = new FileReader("Highscores");
 
         String jsonHighscore = gson.toJson(highscores);
+        + new Gson().toJson(reader, highscores); //någ sånt här kanske????
+
 
 
         PrintWriter hiscorefile = new PrintWriter("Highscores");  //Vill kunna kolla om filfan finns
