@@ -2,11 +2,12 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class BoardTestNew
 {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException, FileNotFoundException {
 	Board b2 = new Board(8, 8);
 	final HighscoreList hs = new HighscoreList();
 	System.out.println(hs);

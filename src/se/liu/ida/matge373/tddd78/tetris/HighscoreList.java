@@ -2,31 +2,27 @@ package se.liu.ida.matge373.tddd78.tetris;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class HighscoreList
 {
 
-    private  List<Highscore> highscores = new ArrayList<>();
-    private List<Highscore> lcs = null;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
-    //private PrintWriter hiscorefile = null;
-    private PrintWriter hiscorefile = null;
+    private List<Highscore> highscores = new ArrayList<>();
 
 
 
@@ -35,44 +31,37 @@ public class HighscoreList
         System.out.println("konstruktorn!!!");
     }
 
+    public List<Highscore> fileReader() throws FileNotFoundException {
+        File newfile = new File("Highscores");
+        JsonReader reader = new JsonReader(new FileReader(newfile));
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<Collection<Highscore>>()
+        {
+        }.getType();
+        List<Highscore> oldHighscores = gson.fromJson(reader, collectionType);
+        return oldHighscores;
+    }
+
+    public void iterHighscores() throws IOException, FileNotFoundException {
+        if (fileReader() != null) {
+            for (Highscore highscore : fileReader()) {
+                addHighscore(highscore);
+            }
+        }
+    }
+
     public void saveScores() throws IOException, FileNotFoundException
     {
-        Reader reader = new FileReader("Highscores");
-        //JsonObject parser = JsonParser.parseReader(reader).getAsJsonObject;
+        Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
 
         String jsonHighscore = gson.toJson(highscores) ;//+ gson.toJson(reader);
-        //gson.toJson(reader, HighscoreList.class);//någ sånt här kanske????
 
 
+        try (PrintWriter hiscorefile = new PrintWriter("Highscores")) {
 
-        PrintWriter hiscorefile = new PrintWriter("Highscores");  //Vill kunna kolla om filfan finns
             hiscorefile.write(jsonHighscore);
             hiscorefile.close();
-
-
-        /*if (file.exists()) {
-            System.out.println(file);
-        try (Writer hifile = new FileWriter(file)) {
-            hifile.write(jsonHighscore);
-
-            hifile.close(); //TODO SKRIV ÖVER ISTÄLLET
-
-        }}*/
-
-
-        /*try (Reader reader = new FileReader("Highscores")) {
-            Gson gson1 = new Gson();
-            Type collectionType = new TypeToken<List<Highscore>>() {}.getType();
-            List<Highscore> lcs = gson.fromJson(reader, collectionType);
-
-        //HighscoreList list = gson.fromJson(reader, HighscoreList.class);
-    }*/
-            //Type collectionType = new TypeToken<List<Highscore>>() {}.getType();
-            //List<Highscore> lcs = gson.fromJson(jsonHighscore, collectionType);
-        //Type collectionType = new TypeToken<Map<String, Highscore>>() {}.getType();
-        //Map<String, Highscore> lcs = gson.fromJson(jsonHighscore, collectionType);
-            //System.out.println(lcs.size());
-
+        }
 }
 
 
@@ -80,10 +69,6 @@ public class HighscoreList
     public void addHighscore(Highscore highscore) throws IOException, FileNotFoundException {
         highscores.add(highscore);
         saveScores();
-    }
-
-    public List<Highscore> getLcs() {
-        return lcs;
     }
 
     public List<Highscore> getHighscores() {

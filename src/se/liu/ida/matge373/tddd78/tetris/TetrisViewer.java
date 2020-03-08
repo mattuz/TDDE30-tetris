@@ -55,11 +55,12 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? P√• n√
         if (board.isGameover() && name == null) {
             name = JOptionPane.showInputDialog("Your score was: " + board.getScore() + "\n" + "Insert name gamer!");
 	    if (name != null) {
-	        Highscore highscore = new Highscore(board.getScore(), name);
+		//highscorelist.iterHighscores();
+
+		Highscore highscore = new Highscore(board.getScore(), name);
 		highscorelist.addHighscore(highscore);
 		System.out.println("HIGHSCORE: " + highscore.getPerson() + ": " + highscore.getScore() + " HAR LAGTS TILL!");
 		highscorelist.getHighscores().sort(new ScoreComparator());
-		System.out.println(hiscoreLooper());
 
 		//JOptionPane.showMessageDialog(frame, hiscoreLooper()); //nullpointer
 		//JOptionPane.showMessageDialog(frame, hiscoreLooper());
@@ -121,7 +122,11 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? P√• n√
 		v1.startGame(true);
 		b2.addBoardListener(v1.getBoardgraphics());
 		v1.keyBindings();
-		v1.show();
+		try {
+		    v1.show();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 		v1.doStep();
 	    }
 	    else {
@@ -188,12 +193,13 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? P√• n√
 	return boardgraphics;
     }
 
-    public void show() {
+    public void show() throws IOException, FileNotFoundException {
 	frame.setLayout(new BorderLayout());
 	frame.add(boardgraphics, BorderLayout.CENTER);
 	frame.pack();
 	frame.setVisible(true);
 	frame.setJMenuBar(menuBar);
+	highscorelist.iterHighscores();
 
     }
 
