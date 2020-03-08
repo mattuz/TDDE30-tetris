@@ -72,7 +72,8 @@ public class Board
 	    if (fallingX <= boardX && boardX <= fallingX + tetroheight && fallingY <= boardY &&
 		boardY <= fallingY + tetrowidth) { //Kollar om (x,y) är inom falling. Om inte --> titta på board.
 
-	        int i = boardX - fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
+		int i = boardX -
+			fallingX; //Båda dessa ger x respektive y index inom falling, beroende av var på boarden vi kollar.
 		int j = boardY - fallingY;
 
 		if (falling.getPolyminoAt(i, j) == SquareType.EMPTY) { //Empty --> Kolla på board.
@@ -81,7 +82,7 @@ public class Board
 		return falling.getPolyminoAt(i, j); // Annars --> Kolla falling.
 	    }
 	}
-	return getSquares(x,y);
+	return getSquares(x, y);
     }
 
     public void addBoardListener(BoardListener bl) {
@@ -113,33 +114,33 @@ public class Board
 
     public void rotate(boolean right) {
 	Poly oldfalling = falling;
-        if (right) {
+	if (right) {
 	    falling = rotateRight();
 	    if (hasCollision()) {
 		System.out.println("Det trodde du va");
-	        falling = oldfalling;
+		falling = oldfalling;
 	    }
 	}
-        if (!right) {
+	if (!right) {
 	    for (int i = 0; i < 3; i++) { //Rotera 3 ggr för att få en vänsterrotation.
 		falling = rotateRight();
 	    }
 	    if (hasCollision()) {
 		System.out.println("Det trodde du va");
-	        falling = oldfalling;
+		falling = oldfalling;
 	    }
 	}
 	notifyListeners();
     }
 
     public Poly rotateRight() {
-        int size = falling.getPolyHeight(); //samma height som width
+	int size = falling.getPolyHeight(); //samma height som width
 
 	Poly newPoly = new Poly(new SquareType[size][size]);
 
 	for (int r = 0; r < size; r++) {
-	    for (int c = 0; c < size; c++){
-		newPoly.getPolymino()[c][size-1-r] = falling.getPolymino()[r][c];
+	    for (int c = 0; c < size; c++) {
+		newPoly.getPolymino()[c][size - 1 - r] = falling.getPolymino()[r][c];
 	    }
 	}
 	return newPoly;
@@ -182,30 +183,29 @@ public class Board
     }
 
     public boolean checkLines(int y) { //Ändra samtliga squares till getSquares istället. Då behövs inte +2.
-        SquareType memorysquare = null;
-        int memorycounter = 0;
+	SquareType memorysquare = null;
+	int memorycounter = 0;
 
-	for (int i = 0; i < width ; i++) {
+	for (int i = 0; i < width; i++) {
 	    if (memorysquare == null) {
-	        memorysquare = getSquares(i, y);
+		memorysquare = getSquares(i, y);
 	    }
 	    if (getSquares(i, y) != SquareType.EMPTY) {
-	        memorysquare = getSquares(i, y);
-	        memorycounter += 1;
+		memorysquare = getSquares(i, y);
+		memorycounter += 1;
 	    }
 	}
 	return memorycounter == width;
     }
 
 
-
     public void removeLines() {
 	for (int y = 0; y < height; y++) {
 	    if (checkLines(y)) {
-	        scorekeeper += 1; //Räknar hur många gånger på raken checklines ger true.
+		scorekeeper += 1; //Räknar hur många gånger på raken checklines ger true.
 		for (int x = 0; x < width; x++) {
-		    for (int k = y ; k > 0 ; k--) {
-			squares[x+2][k+2] = getSquares(x, k-1);
+		    for (int k = y; k > 0; k--) {
+			squares[x + 2][k + 2] = getSquares(x, k - 1);
 		    }
 		}
 	    }
@@ -217,22 +217,22 @@ public class Board
 	System.out.println(score);
     }
 
-    public void scoreCalculator() { //Räknar ut poängen baserat på antalet lines som tas bort.
-	switch (scorekeeper) {
+     public void scoreCalculator() { //Räknar ut poängen baserat på antalet lines som tas bort.
+	switch (scorekeeper) {      //Magic numbers kan ignoreras då konstanter här skulle vara onödigt enl. mig.
 	    case 1:
-	        score += 100;
-	        break;
+		score += 100;
+		break;
 	    case 2:
-	        score += 300; //TODO konstanter (??)
-	        break;
+		score += 300; //Fast poäng, säger sig självt.
+		break;
 	    case 3:
-	        score += 500;
-	    	break;
+		score += 500; //Fast poäng
+		break;
 	    case 4:
-	        score += 800;
-	        break;
+		score += 800; //Fast poäng
+		break;
 	    default:
-	        break;
+		break;
 	}
     }
 
