@@ -27,12 +27,13 @@ public class HighscoreList
 
 
 
-    public HighscoreList() { //TODO Tom konstruktor.. Gör den ens något?
-        System.out.println("konstruktorn!!!");
+
+    public HighscoreList() {
+
     }
 
     public List<Highscore> fileReader() throws FileNotFoundException {
-        File newfile = new File("Highscores");
+        File newfile = new File(System.getProperty("user.home"));
         JsonReader reader = new JsonReader(new FileReader(newfile));
         Gson gson = new Gson();
         Type collectionType = new TypeToken<Collection<Highscore>>()
@@ -45,6 +46,7 @@ public class HighscoreList
     public void iterHighscores() throws IOException, FileNotFoundException {
         if (fileReader() != null) {
             for (Highscore highscore : fileReader()) {
+                System.out.println(highscore.getScore());
                 addHighscore(highscore);
             }
         }
@@ -53,12 +55,9 @@ public class HighscoreList
     public void saveScores() throws IOException, FileNotFoundException
     {
         Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
-
-        String jsonHighscore = gson.toJson(highscores) ;//+ gson.toJson(reader);
-
+        String jsonHighscore = gson.toJson(highscores) ;
 
         try (PrintWriter hiscorefile = new PrintWriter("Highscores")) {
-
             hiscorefile.write(jsonHighscore);
             hiscorefile.close();
         }
@@ -68,7 +67,7 @@ public class HighscoreList
 
     public void addHighscore(Highscore highscore) throws IOException, FileNotFoundException {
         highscores.add(highscore);
-        saveScores();
+        //saveScores();
     }
 
     public List<Highscore> getHighscores() {

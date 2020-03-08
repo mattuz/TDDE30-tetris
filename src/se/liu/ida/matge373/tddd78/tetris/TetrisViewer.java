@@ -55,18 +55,13 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? P√• n√
         if (board.isGameover() && name == null) {
             name = JOptionPane.showInputDialog("Your score was: " + board.getScore() + "\n" + "Insert name gamer!");
 	    if (name != null) {
-		//highscorelist.iterHighscores();
-
 		Highscore highscore = new Highscore(board.getScore(), name);
 		highscorelist.addHighscore(highscore);
 		System.out.println("HIGHSCORE: " + highscore.getPerson() + ": " + highscore.getScore() + " HAR LAGTS TILL!");
 		highscorelist.getHighscores().sort(new ScoreComparator());
+		highscorelist.saveScores();
 
-		//JOptionPane.showMessageDialog(frame, hiscoreLooper()); //nullpointer
-		//JOptionPane.showMessageDialog(frame, hiscoreLooper());
-		/*Gson gson = new Gson();
-		String listAsJson = gson.toJson(highscorelist);
-		JOptionPane.showMessageDialog(frame, listAsJson);*/
+
 
 
 	    }
@@ -199,7 +194,7 @@ public class TetrisViewer extends AbstractAction //Kan jag ta bort detta? P√• n√
 	frame.pack();
 	frame.setVisible(true);
 	frame.setJMenuBar(menuBar);
-	highscorelist.iterHighscores();
+	highscorelist.fileReader();
 
     }
 
